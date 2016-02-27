@@ -1,11 +1,42 @@
 body{
+    font-family: 'Lobster Two', cursive;
     margin-top:80px;
+}
+a{
+    color: #dcdcdc;
+    font-size: 20px;
+}
+a:hover{
+    color: #dcdcdc;
+}
+.navbar{
+    font-size: 20px;
+}
+.navbar-brand{
+    font-family: 'Great Vibes', cursive;
+    font-size: 30px;
 }
 
 .container-content{
+    text-align: center;
+    color: #dcdcdc;
+    padding: 50px;
     background-color: darkred;
-    height: 500px;
     box-shadow: inset 0px 0px 80px 2px black;
+}
+.container-content p{
+    font-family: 'Raleway', sans-serif;
+    text-align: justify;
+    text-indent:20px;
+}
+
+h1{
+    color: darkred;
+    font-size: 50px;
+    margin-bottom: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-shadow: 1px 1px 2px black;
 }
 
 .footer{
@@ -13,4 +44,32 @@ body{
     margin-top: 20px;
     padding-top: 10px;
     text-align: center;
+}
+
+.img-index{
+    width: 100%;
+    border: 15px solid whitesmoke;
+    border-style:double;
+}
+
+.img-vinyl {
+    width: 90px;
+    height: 90px;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg);}}
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg);}}
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+/* Changement en fonction de l'ecran */
+
+@media screen and (max-width: 600px){
+    h1{
+        font-size: 40px;
+    }
+    .container-content{
+        padding: 20px;
+    }
 }
