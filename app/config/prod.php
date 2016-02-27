@@ -7,6 +7,6 @@ $app['db.options'] = array(
     'host'     => 'localhost',
     'port'     => '3306',
     'dbname'   => 'madeforvinyl',      // a remplir
-    'user'     => 'madefor_user', // a remplir
+    'user'     => 'madefor_user',     // a remplir
     'password' => 'secret',
 );
