@@ -52,7 +52,7 @@ h1{
     border-style:double;
 }
 
-.img-vinyl {
+.img-vinyl-anim {
     width: 90px;
     height: 90px;
     -webkit-animation:spin 4s linear infinite;
@@ -63,6 +63,19 @@ h1{
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg);}}
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
+.img-vinyl {
+    margin: 10px;
+    margin-bottom: 50px;
+    border: 2px solid white;
+    box-shadow: 0px 0px 30px 2px black;
+    transition: all 0.5s ease 0s;
+    cursor: pointer;
+}
+.img-vinyl:hover {
+    transform: scale(1.2);
+    border: 4px solid black;
+
+}
 /* Changement en fonction de l'ecran */
 
 @media screen and (max-width: 600px){

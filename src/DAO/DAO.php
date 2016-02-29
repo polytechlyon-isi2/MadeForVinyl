@@ -1,6 +1,6 @@
 <?php
 
-namespace MadeForVinyl\src\DAO;
+namespace MadeForVinyl\DAO;
 
 use Doctrine\DBAL\Connection;
 

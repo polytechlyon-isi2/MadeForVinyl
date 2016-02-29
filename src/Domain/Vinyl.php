@@ -1,6 +1,6 @@
 <?php
 
-namespace MadeForVinyl\src\Domain;
+namespace MadeForVinyl\Domain;
 
 class Vinyl 
 {
@@ -38,6 +38,13 @@ class Vinyl
      * @var string
      */
     private $year;
+    
+    /**
+     * Vinyl sleeve.
+     *
+     * @var string
+     */
+    private $sleeve;
 
     public function getId() {
         return $this->id;
@@ -73,9 +80,17 @@ class Vinyl
     
     public function getYear() {
         return $this->year;
+    } 
+    
+    public function setYear($year) {
+        $this->year = $year;
+    }
+    
+    public function getSleeve() {
+        return $this->sleeve;
     }
 
-    public function setArtist($year) {
-        $this->year = $year;
+    public function setSleeve($sleeve) {
+        $this->sleeve = $sleeve;
     }
 }

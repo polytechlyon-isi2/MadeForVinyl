@@ -3,19 +3,13 @@
 {% block title %}Accueil{% endblock %}
 
 {% block titleH1 %}
-Bienvenue sur MadeForVinyl
+{{ category.title }}
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-6">
-            <img src="img/ws_White_Vinyl_2560x1440.jpg" class="img-index">
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-6">
-            <h2> Projet e-commerce :</h2><br>
-            <p>
-                A remplir
-            </p>
-        </div>
-    </div>
+        {% for vinyl in vinyls %}
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <img src="{{ vinyl.sleeve }}" class="img-circle img-vinyl" height="150" width="150" >
+            </div>
+        {% endfor %}
 {% endblock %}
