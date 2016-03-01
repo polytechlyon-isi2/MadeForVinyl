@@ -16,7 +16,9 @@ $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 // Register services
 $app['dao.vinyl'] = $app->share(function ($app) {
-    return new MadeForVinyl\DAO\VinylDAO($app['db']);
+    $vinylDAO = new MadeForVinyl\DAO\VinylDAO($app['db']);
+    $vinylDAO->setCategoryDAO($app['dao.category']);
+    return $vinylDAO;
 });
 $app['dao.category'] = $app->share(function ($app) {
     return new MadeForVinyl\DAO\CategoryDAO($app['db']);

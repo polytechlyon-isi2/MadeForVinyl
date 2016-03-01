@@ -7,9 +7,9 @@ use MadeForVinyl\Domain\Category;
 class CategoryDAO extends DAO
 {
     /**
-     * Return a list of all Vinyls, sorted by date (most recent first).
+     * Return the list of all Categories,
      *
-     * @return array A list of all Vinyls.
+     * @return array A list of all Categories.
      */
     public function findAll() {
         $sql = "select * from t_category";
@@ -23,6 +23,14 @@ class CategoryDAO extends DAO
         }
         return $categories;
     }
+    
+    /**
+     * Returns a Category matching the supplied id.
+     *
+     * @param integer $idCategory
+     *
+     * @return \MadeForVinyl\Domain\Category|throws an exception if no matching category is found
+     */
     public function find($idCategory) {
         $sql = "select * from t_category where category_id=?";
         $row = $this->getDb()->fetchAssoc($sql, array($idCategory));
@@ -31,11 +39,12 @@ class CategoryDAO extends DAO
         else
             throw new \Exception("No article matching id " . $idCategory);
     }
+    
     /**
-     * Creates an Vinyl object based on a DB row.
+     * Creates a Category object based on a DB row.
      *
-     * @param array $row The DB row containing Vinyl data.
-     * @return \MadeForVinyl\Domain\Vinyl
+     * @param array $row The DB row containing Category data.
+     * @return \MadeForVinyl\Domain\Category
      */
     protected function buildDomainObject($row) {
         $category = new Category();

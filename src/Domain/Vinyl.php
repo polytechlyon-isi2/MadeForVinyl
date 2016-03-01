@@ -26,16 +26,16 @@ class Vinyl
     private $artist;
     
     /**
-     * Vinyl category.
+     * Associated category.
      *
-     * @var int
+     * @var \MicroCMS\Domain\Category
      */
     private $category;
     
     /**
      * Vinyl year.
      *
-     * @var string
+     * @var integer
      */
     private $year;
     
@@ -49,7 +49,7 @@ class Vinyl
     /**
      * Vinyl price.
      *
-     * @var price
+     * @var double
      */
     private $price;
 
@@ -81,7 +81,7 @@ class Vinyl
         return $this->category;
     }
 
-    public function setCategory($category) {
+    public function setCategory(Category $category) {
         $this->category = $category;
     }
     

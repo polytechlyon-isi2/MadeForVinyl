@@ -9,6 +9,27 @@ a{
 a:hover{
     color: #dcdcdc;
 }
+h1{
+    color: darkred;
+    font-size: 50px;
+    margin-bottom: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-shadow: 1px 1px 2px black;
+}
+.footer{
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+    padding-top: 10px;
+    text-align: center;
+}
+.img-index{
+    width: 100%;
+    border: 15px solid whitesmoke;
+    border-style:double;
+}
+
+/* CSS NAVBAR */
 .navbar{
     font-size: 20px;
 }
@@ -16,7 +37,9 @@ a:hover{
     font-family: 'Great Vibes', cursive;
     font-size: 30px;
 }
+/* END CSS NAVBAR */
 
+/* CSS RED CONTAINER */
 .container-content{
     text-align: center;
     color: #dcdcdc;
@@ -29,37 +52,25 @@ a:hover{
     text-align: justify;
     text-indent:20px;
 }
+/* CSS RED CONTAINER */
 
-h1{
-    color: darkred;
-    font-size: 50px;
-    margin-bottom: 30px;
-    margin-left: 5px;
-    margin-right: 5px;
-    text-shadow: 1px 1px 2px black;
-}
-
-.footer{
-    border-top: 1px solid #ccc;
-    margin-top: 20px;
-    padding-top: 10px;
-    text-align: center;
-}
-
-.img-index{
-    width: 100%;
-    border: 15px solid whitesmoke;
-    border-style:double;
-}
+/* CSS TABLES */
 .table-hover tr:hover{
+    cursor: pointer;
     background-color: chocolate !important;
+}
+.table-hover tr{
+    background-color: transparent;
+    transition: background-color 500ms ease;
 }
 .table{
     margin-top: 30px;
     font-family: 'Raleway', sans-serif;
     text-align: left;
 }
+/* END CSS TABLES */
 
+/* ANIMATION VINYLS */
 .img-vinyl-anim {
     width: 90px;
     height: 90px;
@@ -70,7 +81,9 @@ h1{
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg);}}
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg);}}
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+/* END ANIMATION VINYLS */
 
+/* CSS VINYLS SLEEVES */
 .img-vinyl {
     margin: 10px;
     margin-bottom: 50px;
@@ -82,10 +95,10 @@ h1{
 .img-vinyl:hover {
     transform: scale(1.2);
     border: 4px solid black;
-
 }
-/* Changement en fonction de l'ecran */
+/* END CSS VINYLS SLEEVES */
 
+/* SCALE WITH SCREEN SIZE */
 @media screen and (max-width: 600px){
     h1{
         font-size: 40px;
