@@ -51,6 +51,7 @@ class VinylDAO extends DAO
         else
             throw new \Exception("No article matching id " . $idVinyl);
     }
+    
     /**
      * Creates an Vinyl object based on a DB row.
      *
@@ -65,6 +66,7 @@ class VinylDAO extends DAO
         $vinyl->setCategory($row['vinyl_category']);
         $vinyl->setYear($row['vinyl_year']);
         $vinyl->setSleeve($row['vinyl_sleeve']);
+        $vinyl->setPrice($row['vinyl_price']);
         return $vinyl;
     }
 }

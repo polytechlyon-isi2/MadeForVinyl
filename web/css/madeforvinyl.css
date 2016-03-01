@@ -51,6 +51,14 @@ h1{
     border: 15px solid whitesmoke;
     border-style:double;
 }
+.table-hover tr:hover{
+    background-color: chocolate !important;
+}
+.table{
+    margin-top: 30px;
+    font-family: 'Raleway', sans-serif;
+    text-align: left;
+}
 
 .img-vinyl-anim {
     width: 90px;

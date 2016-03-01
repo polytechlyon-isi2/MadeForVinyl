@@ -28,7 +28,7 @@ class Vinyl
     /**
      * Vinyl category.
      *
-     * @var string
+     * @var int
      */
     private $category;
     
@@ -45,6 +45,13 @@ class Vinyl
      * @var string
      */
     private $sleeve;
+    
+    /**
+     * Vinyl price.
+     *
+     * @var price
+     */
+    private $price;
 
     public function getId() {
         return $this->id;
@@ -92,5 +99,13 @@ class Vinyl
 
     public function setSleeve($sleeve) {
         $this->sleeve = $sleeve;
+    }
+    
+    public function getPrice() {
+        return $this->price;
+    }
+
+    public function setPrice($price) {
+        $this->price = $price;
     }
 }

@@ -7,8 +7,38 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-md-3 col-sm-4 col-xs-12">
-
+<div class="row">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <img src="{{ vinyl.sleeve }}" class="img-thumbnail">
     </div>
-
+    <div class="col-md-8 col-sm-6 col-xs-12">
+        <h2> informations :</h2>
+        <div class="">
+            <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td>Titre :</td>
+                    <td>{{ vinyl.title }}</td>
+                  </tr>
+                  <tr>
+                    <td>Artiste :</td>
+                    <td>{{ vinyl.artist }}</td>
+                  </tr>
+                  <tr>
+                    <td>Année :</td>
+                    <td>{{ vinyl.year }}</td>
+                  </tr>
+                    <tr>
+                    <td>Catégorie :</td>
+                    <td>{{ category.title }}</td>
+                  </tr>
+                    <tr>
+                    <td>Prix :</td>
+                    <td>{{ vinyl.price }} €</td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

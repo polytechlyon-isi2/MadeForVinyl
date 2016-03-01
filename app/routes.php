@@ -15,8 +15,9 @@ $app->get('/category/{id}', function ($id) use ($app) {
 })->bind('category');
 
 // vinyl page
-$app->get('/category/vinyl/{id}', function($id) use ($app){
+$app->get('/vinyl/{id}', function($id) use ($app){
     $categories = $app['dao.category']->findAll();
     $vinyl = $app['dao.vinyl']->find($id);
-    return $app['twig']->render('vinyl.html.twig',array('categories' => $categories, 'vinyl' => $vinyl));
+    $category = $app['dao.category']->find($id);
+    return $app['twig']->render('vinyl.html.twig',array('categories' => $categories, 'vinyl' => $vinyl,'category'=> $category));
 })->bind('vinyl');
