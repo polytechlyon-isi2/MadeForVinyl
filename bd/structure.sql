@@ -14,6 +14,7 @@ vinyl_artist varchar(200) not null,
 vinyl_category integer not null,
 vinyl_year integer not null,
 vinyl_sleeve varchar(500) not null,
+vinyl_price double not null,
 foreign key (vinyl_category) references t_category(category_id)
 )engine=innodb character set utf8 collate utf8_unicode_ci;
 

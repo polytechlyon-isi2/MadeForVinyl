@@ -1,6 +1,6 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}{{ category.title }}{% endblock %}
 
 {% block titleH1 %}
 {{ category.title }}
@@ -9,7 +9,11 @@
 {% block content %}
         {% for vinyl in vinyls %}
             <div class="col-md-3 col-sm-4 col-xs-12">
-                <img src="{{ vinyl.sleeve }}" class="img-circle img-vinyl" height="150" width="150" >
+                <a href="{{ path('vinyl', { 'id': vinyl.id }) }}"> 
+                    <img src="{{ vinyl.sleeve }}" class="img-circle img-vinyl" height="150" width="150" data-toggle="tooltip" data-placement="bottom" title="{{ vinyl.title }}">
+                </a>
             </div>
+        {% else %}
+            <h2>Pas de vinyls dans cette catégorie pour le moment !</h2>
         {% endfor %}
 {% endblock %}

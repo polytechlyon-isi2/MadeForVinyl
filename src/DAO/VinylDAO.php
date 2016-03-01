@@ -31,10 +31,10 @@ class VinylDAO extends DAO
      *
      * @return \MadeForVinyl\Domain\Vinyl |throws an exception if no matching article is found
      */
-    public function findAllId($id) {
+    public function findAllId($idCategory) {
         $sql = "select * from t_vinyl where vinyl_category=?";
         
-        $result = $this->getDb()->fetchAll($sql, array($id));
+        $result = $this->getDb()->fetchAll($sql, array($idCategory));
         $vinyls = array();
         foreach ($result as $row) {
             $vinylId = $row['vinyl_id'];
@@ -43,6 +43,14 @@ class VinylDAO extends DAO
         return $vinyls;
     }
     
+    public function find($idVinyl) {
+        $sql = "select * from t_vinyl where vinyl_id=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($idVinyl));
+        if ($row)
+            return $this->buildDomainObject($row);
+        else
+            throw new \Exception("No article matching id " . $idVinyl);
+    }
     /**
      * Creates an Vinyl object based on a DB row.
      *

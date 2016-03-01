@@ -23,13 +23,13 @@ class CategoryDAO extends DAO
         }
         return $categories;
     }
-    public function find($id) {
+    public function find($idCategory) {
         $sql = "select * from t_category where category_id=?";
-        $row = $this->getDb()->fetchAssoc($sql, array($id));
+        $row = $this->getDb()->fetchAssoc($sql, array($idCategory));
         if ($row)
             return $this->buildDomainObject($row);
         else
-            throw new \Exception("No article matching id " . $id);
+            throw new \Exception("No article matching id " . $idCategory);
     }
     /**
      * Creates an Vinyl object based on a DB row.
