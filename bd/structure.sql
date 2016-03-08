@@ -21,7 +21,9 @@ foreign key (vinyl_category) references t_category(category_id)
 drop table if exists t_user;
 
 create table t_user (
-user_id integer not null primary key auto_increment,
-user_name varchar(200) not null,
-user_pass varchar(20) not null
+    usr_id integer not null primary key auto_increment,
+    usr_login varchar(50) not null,
+    usr_password varchar(88) not null,
+    usr_salt varchar(23) not null,
+    usr_role varchar(50) not null 
 ) engine=innodb character set utf8 collate utf8_unicode_ci;

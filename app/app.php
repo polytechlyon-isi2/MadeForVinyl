@@ -3,6 +3,7 @@
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
 
+
 // Register global error and exception handlers
 ErrorHandler::register();
 ExceptionHandler::register();
@@ -13,7 +14,22 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../views',
 ));
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
-
+$app->register(new Silex\Provider\SessionServiceProvider());
+$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+    'security.firewalls' => array(
+        'secured' => array(
+            'pattern' => '^/',
+            'anonymous' => true,
+            'logout' => true,
+            'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
+            'users' => $app->share(function () use ($app) {
+                return new MadeForVinyl\DAO\UserDAO($app['db']);
+            }),
+        ),
+    ),
+));
+$app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new Silex\Provider\TranslationServiceProvider());
 // Register services
 $app['dao.vinyl'] = $app->share(function ($app) {
     $vinylDAO = new MadeForVinyl\DAO\VinylDAO($app['db']);
@@ -22,4 +38,7 @@ $app['dao.vinyl'] = $app->share(function ($app) {
 });
 $app['dao.category'] = $app->share(function ($app) {
     return new MadeForVinyl\DAO\CategoryDAO($app['db']);
+});
+$app['dao.user'] = $app->share(function ($app) {
+    return new MadeForVinyl\DAO\UserDAO($app['db']);
 });

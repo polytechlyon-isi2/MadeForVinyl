@@ -7,3 +7,7 @@ INSERT INTO t_vinyl(vinyl_title, vinyl_artist, vinyl_category, vinyl_year, vinyl
 ("Only Built 4 Cuban Linx", "Raekwon", "9", "1995", "http://static.stereogum.com/uploads/2015/07/Raekwon-Only-Built-4-Cuban-Linx.jpg",10.00),
 ("House of Pain (Fine Malt Lyrics)", "House of Pain", "9", "1992", "https://fanart.tv/fanart/music/c2d6a6fb-7999-4bb3-b2df-7d752fdf4e95/albumcover/house-of-pain-4f9430975d40d.jpg",10.00),
 ("Led Zeppelin", "Led Zeppelin", "11", "1969", "http://static.stereogum.com/uploads/2014/10/ledzeppelin1.jpeg",10.00);
+
+/* raw password is 'john' */
+INSERT INTO t_user VALUES
+(1, 'JohnDoe', 'L2nNR5hIcinaJkKR+j4baYaZjcHS0c3WX2gjYF6Tmgl1Bs+C9Qbr+69X8eQwXDvw0vp73PrcSeT0bGEW5+T2hA==', 'YcM=A$nsYzkyeDVjEUa7W9K', 'ROLE_USER');
