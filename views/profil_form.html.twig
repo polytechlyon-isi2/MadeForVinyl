@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
-{% block titleH1 %}Inscription{% endblock %}
+{% block title %}Modifier profil{% endblock %}
+{% block titleH1 %}Modifier mon profil{% endblock %}
 {% block content %}
 
 
@@ -13,100 +13,100 @@
 {% endfor %}
 
 
-{% if form_errors(userForm.password.first) %}
+{% if form_errors(profilForm.password.first) %}
 <div class="alert alert-danger">
-    {{ form_errors(userForm.password.first) }}
+    {{ form_errors(profilForm.password.first) }}
 </div>
 {% endif %}
 
 
-{{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
+{{ form_start(profilForm, { 'attr': {'class': 'form-horizontal'} }) }}
     <div class="form-group">
-        {{ form_label(userForm.name, null, { 'label_attr':  {
+        {{ form_label(profilForm.name, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_errors(userForm.name) }}
-            {{ form_widget(userForm.name, { 'attr':  {
+            {{ form_errors(profilForm.name) }}
+            {{ form_widget(profilForm.name, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
     </div>
     
     <div class="form-group">
-        {{ form_label(userForm.surname, null, { 'label_attr':  {
+        {{ form_label(profilForm.surname, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_errors(userForm.surname) }}
-            {{ form_widget(userForm.surname, { 'attr':  {
+            {{ form_errors(profilForm.surname) }}
+            {{ form_widget(profilForm.surname, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
     </div>
     <div class="form-group">
-        {{ form_label(userForm.adress, null, { 'label_attr':  {
+        {{ form_label(profilForm.adress, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_errors(userForm.adress) }}
-            {{ form_widget(userForm.adress, { 'attr':  {
+            {{ form_errors(profilForm.adress) }}
+            {{ form_widget(profilForm.adress, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
     </div>
     <div class="form-group">
-        {{ form_label(userForm.postalCode, null, { 'label_attr':  {
+        {{ form_label(profilForm.postalCode, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_errors(userForm.postalCode) }}
-            {{ form_widget(userForm.postalCode, { 'attr':  {
+            {{ form_errors(profilForm.postalCode) }}
+            {{ form_widget(profilForm.postalCode, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
     </div>
     <div class="form-group">
-        {{ form_label(userForm.town, null, { 'label_attr':  {
+        {{ form_label(profilForm.town, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_errors(userForm.town) }}
-            {{ form_widget(userForm.town, { 'attr':  {
+            {{ form_errors(profilForm.town) }}
+            {{ form_widget(profilForm.town, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
     </div>
 
 <div class="form-group">
-        {{ form_label(userForm.username, null, { 'label_attr':  {
+        {{ form_label(profilForm.username, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_errors(userForm.username) }}
-            {{ form_widget(userForm.username, { 'attr':  {
+            {{ form_errors(profilForm.username) }}
+            {{ form_widget(profilForm.username, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
     </div>
 
     <div class="form-group">
-        {{ form_label(userForm.password.first, null, { 'label_attr':  {
+        {{ form_label(profilForm.password.first, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_widget(userForm.password.first, { 'attr':  {
+            {{ form_widget(profilForm.password.first, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
     </div>
 
     <div class="form-group">
-        {{ form_label(userForm.password.second, null, { 'label_attr':  {
+        {{ form_label(profilForm.password.second, null, { 'label_attr':  {
             'class': 'col-sm-5 control-label'
         }}) }}
         <div class="col-sm-4">
-            {{ form_widget(userForm.password.second, { 'attr':  {
+            {{ form_widget(profilForm.password.second, { 'attr':  {
                 'class': 'form-control'
             }}) }}
         </div>
@@ -116,6 +116,6 @@
         <div class="col-sm-offset-5 col-sm-3">
             <input type="submit" class="btn btn-primary" value="S'enregistrer" />
         </div>
-{{ form_end(userForm) }}
+{{ form_end(profilForm) }}
 </div>
 {% endblock %}

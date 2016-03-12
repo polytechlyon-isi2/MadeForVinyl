@@ -28,6 +28,35 @@ class UserDAO extends DAO implements UserProviderInterface
     }
 
     /**
+     * Saves a user into the database.
+     *
+     * @param \MadeForVinyl\Domain\User $user The user to save
+     */
+    public function saveDefaultUser(User $user) {
+        $userData = array(
+            'usr_name' => $user->getName(),
+            'usr_surname' => $user->getSurname(),
+            'usr_adress' => $user->getAdress(),
+            'usr_postalCode' => $user->getPostalCode(),
+            'usr_town' => $user->getTown(),
+            'usr_login' => $user->getUsername(),
+            'usr_salt' => $user->getSalt(),
+            'usr_password' => $user->getPassword(),
+            'usr_role' => 'User'
+            );
+        if ($user->getId()) {
+            // The user has already been saved : update it
+            $this->getDb()->update('t_user', $userData, array('usr_id' => $user->getId()));
+        } else {
+            // The user has never been saved : insert it
+            $this->getDb()->insert('t_user', $userData);
+            // Get the id of the newly created user and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $user->setId($id);
+        }
+    }
+    
+    /**
      * {@inheritDoc}
      */
     public function loadUserByUsername($username)
@@ -70,6 +99,11 @@ class UserDAO extends DAO implements UserProviderInterface
     protected function buildDomainObject($row) {
         $user = new User();
         $user->setId($row['usr_id']);
+        $user->setName($row['usr_name']);
+        $user->setSurname($row['usr_surname']);
+        $user->setAdress($row['usr_adress']);
+        $user->setPostalCode($row['usr_postalCode']);
+        $user->setTown($row['usr_town']);
         $user->setUsername($row['usr_login']);
         $user->setPassword($row['usr_password']);
         $user->setSalt($row['usr_salt']);

@@ -18,6 +18,41 @@ class User implements UserInterface
      *
      * @var string
      */
+    private $name;
+    
+    /**
+     * User surname.
+     *
+     * @var string
+     */
+    private $surname;
+    
+    /**
+     * User adress.
+     *
+     * @var string
+     */
+    private $adress;
+    
+    /**
+     * User postalCode.
+     *
+     * @var integer
+     */
+    private $postalCode;
+    
+    /**
+     * User town.
+     *
+     * @var string
+     */
+    private $town;
+    
+    /**
+     * User name.
+     *
+     * @var string
+     */
     private $username;
 
     /**
@@ -42,14 +77,48 @@ class User implements UserInterface
      */
     private $role;
 
+    public function getSurname() {
+        return $this->surname;
+    }
+    public function setSurname($surname) {
+        $this->surname = $surname;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+    public function setName($name) {
+        $this->name = $name;
+    }
+    
+    public function getAdress() {
+        return $this->adress;
+    }
+    public function setAdress($adress) {
+        $this->adress = $adress;
+    }
+    
+    public function getPostalCode() {
+        return $this->postalCode;
+    }
+    public function setPostalCode($postalCode) {
+        $this->postalCode = $postalCode;
+    }
+    
+    public function getTown() {
+        return $this->town;
+    }
+    public function setTown($town) {
+        $this->town = $town;
+    }
+    
     public function getId() {
         return $this->id;
     }
-
     public function setId($id) {
         $this->id = $id;
     }
-
+    
     /**
      * @inheritDoc
      */

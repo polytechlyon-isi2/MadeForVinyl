@@ -37,6 +37,13 @@ h1{
     font-family: 'Great Vibes', cursive;
     font-size: 30px;
 }
+.navbar a{
+    transition: all 0.5s linear 0s;
+}
+.dropdown-menu a:hover{
+    background-color:firebrick !important;
+    color: aliceblue !important;
+}
 /* END CSS NAVBAR */
 
 /* CSS RED CONTAINER */
@@ -97,7 +104,9 @@ h1{
     border: 4px solid black;
 }
 /* END CSS VINYLS SLEEVES */
-
+.row-profil{
+    padding-left: 100px;
+}
 /* SCALE WITH SCREEN SIZE */
 @media screen and (max-width: 600px){
     h1{

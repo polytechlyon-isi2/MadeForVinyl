@@ -5,11 +5,11 @@ namespace MadeForVinyl\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class InscriptionType extends AbstractType
+class ProfilType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+       $builder
             ->add('name', 'text',array('label'=>'Prénom'))
             ->add('surname', 'text',array('label'=>'Nom'))
             ->add('adress', 'text',array('label'=>'adresse'))
@@ -27,6 +27,6 @@ class InscriptionType extends AbstractType
 
     public function getName()
     {
-        return 'inscription';
+        return 'profil';
     }
 }

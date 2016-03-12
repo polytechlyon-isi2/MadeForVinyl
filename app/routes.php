@@ -2,6 +2,7 @@
 use Symfony\Component\HttpFoundation\Request;
 use MadeForVinyl\Domain\User;
 use MadeForVinyl\Form\Type\InscriptionType;
+use MadeForVinyl\Form\Type\ProfilType;
 
 // Home page
 $app->get('/', function () use ($app) {
@@ -49,10 +50,41 @@ $app->match('/inscription', function(Request $request) use ($app) {
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password); 
-        $app['dao.user']->save($user);
+        $app['dao.user']->saveDefaultUser($user);
         $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
+        $app->redirect($app['url_generator']->generate('home'));
     }
-    return $app['twig']->render('inscription_form.html.twig', array(
-        'title' => 'New user',
+    return $app['twig']->render('inscription_form.html.twig', array('categories' => $categories,
         'userForm' => $userForm->createView()));
 })->bind('inscription');
+
+// Modify a user form
+$app->match('/modifProfil/{id}', function(Request $request, $id) use ($app) {
+    $categories = $app['dao.category']->findAll();
+    $user = $app['dao.user']->find($id);
+    $profilForm = $app['form.factory']->create(new ProfilType(), $user);
+    $profilForm->handleRequest($request);
+    if ($profilForm->isSubmitted() && $profilForm->isValid()) {
+        // generate a random salt value
+        $salt = substr(md5(time()), 0, 23);
+        $user->setSalt($salt);
+        $plainPassword = $user->getPassword();
+        // find the default encoder
+        $encoder = $app['security.encoder.digest'];
+        // compute the encoded password
+        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+        $user->setPassword($password);
+        $app['dao.user']->saveDefaultUser($user);
+        $app['session']->getFlashBag()->add('success', 'The user was successfully modified.');
+        $app->redirect($app['url_generator']->generate('home'));
+    }
+    return $app['twig']->render('profil_form.html.twig', array('user' => $user, 'categories' => $categories,
+        'profilForm' => $profilForm->createView()));
+})->bind('modifProfil');
+
+// Profil
+$app->get('/profil/{id}', function ($id) use ($app) {
+    $categories = $app['dao.category']->findAll();
+    $user = $app['dao.user']->find($id);
+    return $app['twig']->render('profil.html.twig',array('categories' => $categories, 'user' => $user));
+})->bind('profil');
