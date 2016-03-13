@@ -58,6 +58,17 @@ $app->match('/inscription', function(Request $request) use ($app) {
         'userForm' => $userForm->createView()));
 })->bind('inscription');
 
+// Admin home page
+$app->get('/admin', function() use ($app) {
+    $categories = $app['dao.category']->findAll();
+    $vinyls = $app['dao.vinyl']->findAll();
+    $users = $app['dao.user']->findAll();
+    return $app['twig']->render('admin.html.twig', array(
+        'categories' => $categories,
+        'vinyls' => $vinyls,
+        'users' => $users));
+})->bind('admin');
+
 // Modify a user form
 $app->match('/modifProfil/{id}', function(Request $request, $id) use ($app) {
     $categories = $app['dao.category']->findAll();

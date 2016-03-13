@@ -33,6 +33,24 @@ class VinylDAO extends DAO
         }
         return $vinyls;
     }
+    /**
+     * Returns the list of all Vinyls
+     *
+     * @param empty
+     *
+     * @return \MadeForVinyl\Domain\Vinyl
+     */
+    public function findAll() {
+        $sql = "select * from t_vinyl";
+        $result = $this->getDb()->fetchAll($sql);
+        
+        $vinyls = array();
+        foreach ($result as $row) {
+            $vinylId = $row['vinyl_id'];
+            $vinyls[$vinylId] = $this->buildDomainObject($row);
+        }
+        return $vinyls;
+    }
     
     /**
      * Returns the Vinyl matching the supplied id.

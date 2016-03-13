@@ -12,7 +12,7 @@ class ProfilType extends AbstractType
        $builder
             ->add('name', 'text',array('label'=>'Prénom'))
             ->add('surname', 'text',array('label'=>'Nom'))
-            ->add('adress', 'text',array('label'=>'adresse'))
+            ->add('adress', 'text',array('label'=>'Adresse'))
             ->add('postalCode', 'integer',array('label'=>'Code Postal'))
             ->add('town', 'text',array('label'=>'Ville'))
             ->add('username', 'text',array('label'=>'Adresse mail'))

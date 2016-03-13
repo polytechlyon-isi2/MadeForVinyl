@@ -28,6 +28,25 @@ class UserDAO extends DAO implements UserProviderInterface
     }
 
     /**
+     * Returns the list of all Vinyls
+     *
+     * @param empty
+     *
+     * @return \MadeForVinyl\Domain\Vinyl
+     */
+    public function findAll() {
+        $sql = "select * from t_user";
+        $result = $this->getDb()->fetchAll($sql);
+        
+        $users = array();
+        foreach ($result as $row) {
+            $userId = $row['usr_id'];
+            $users[$userId] = $this->buildDomainObject($row);
+        }
+        return $users;
+    }
+    
+    /**
      * Saves a user into the database.
      *
      * @param \MadeForVinyl\Domain\User $user The user to save

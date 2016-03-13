@@ -75,6 +75,10 @@ h1{
     font-family: 'Raleway', sans-serif;
     text-align: left;
 }
+.table-profil{
+    width: 50%;
+    margin-left: 25%;
+}
 /* END CSS TABLES */
 
 /* ANIMATION VINYLS */
@@ -104,9 +108,11 @@ h1{
     border: 4px solid black;
 }
 /* END CSS VINYLS SLEEVES */
-.row-profil{
-    padding-left: 100px;
+
+.control-label{
+    font-size: 15px;
 }
+
 /* SCALE WITH SCREEN SIZE */
 @media screen and (max-width: 600px){
     h1{
@@ -114,5 +120,9 @@ h1{
     }
     .container-content{
         padding: 20px;
+    }
+    .table-profil{
+        width: 100%;
+        margin-left: 0%;
     }
 }
