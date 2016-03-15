@@ -53,6 +53,14 @@ $app['dao.vinyl'] = $app->share(function ($app) {
 $app['dao.category'] = $app->share(function ($app) {
     return new MadeForVinyl\DAO\CategoryDAO($app['db']);
 });
+
 $app['dao.user'] = $app->share(function ($app) {
     return new MadeForVinyl\DAO\UserDAO($app['db']);
+});
+
+$app['dao.basket'] = $app->share(function ($app){
+    $basketDAO = new MadeForVinyl\DAO\BasketDAO($app['db']);
+    $basketDAO->setUserDAO($app['dao.user']);
+    $basketDAO->setVinylDAO($app['dao.vinyl']);
+    return $basketDAO;
 });

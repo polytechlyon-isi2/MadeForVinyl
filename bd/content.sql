@@ -8,6 +8,5 @@ INSERT INTO t_vinyl(vinyl_title, vinyl_artist, vinyl_category, vinyl_year, vinyl
 ("House of Pain (Fine Malt Lyrics)", "House of Pain", "9", "1992", "https://fanart.tv/fanart/music/c2d6a6fb-7999-4bb3-b2df-7d752fdf4e95/albumcover/house-of-pain-4f9430975d40d.jpg",10.00),
 ("Led Zeppelin", "Led Zeppelin", "11", "1969", "http://static.stereogum.com/uploads/2014/10/ledzeppelin1.jpeg",10.00);
 
-/* raw password is '@dm1n' */
-insert into t_user values
-(3, 'admin', 'gqeuP4YJ8hU3ZqGwGikB6+rcZBqefVy+7hTLQkOD+jwVkp4fkS7/gr1rAQfn9VUKWc7bvOD7OsXrQQN5KGHbfg==', 'EDDsl&fBCJB|a5XUtAlnQN8', 'ROLE_ADMIN');
+/* raw password is '@adm1n' */
+INSERT INTO `madeforvinyl`.`t_user` (`usr_id`, `usr_name`, `usr_surname`, `usr_adress`, `usr_postalCode`, `usr_town`, `usr_login`, `usr_password`, `usr_salt`, `usr_role`) VALUES ('0', 'admin', 'admin', 'admin', '0', 'admin', 'admin', 'zULRDxmsy23NXB5Xn8xmJX4Vfeelj770+Zysx1UEp3HvqhRIeT5OVUASAxVVr6lVq45xt3XbhzZrOckPfSUjUQ==', '6f37030b5941eba2bdd93de', 'ROLE_ADMIN');

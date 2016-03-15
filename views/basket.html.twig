@@ -1,0 +1,15 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Mon Panier{% endblock %}
+
+{% block titleH1 %}
+Mon Panier
+{% endblock %}
+
+{% block content %}
+        {% for basket in baskets %}
+        
+        {% else %}
+            <h2>Vous n'avez rien dans votre panier! Continuez vos achats... </h2>
+        {% endfor %}
+{% endblock %}

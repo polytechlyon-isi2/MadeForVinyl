@@ -99,3 +99,11 @@ $app->get('/profil/{id}', function ($id) use ($app) {
     $user = $app['dao.user']->find($id);
     return $app['twig']->render('profil.html.twig',array('categories' => $categories, 'user' => $user));
 })->bind('profil');
+
+// Basket page
+$app->get('/panier/{id}', function ($id) use ($app){
+    $categories = $app['dao.category']->findAll();
+    $baskets = $app['dao.basket']->findAllByIdUser($id);
+
+    return $app['twig']->render('basket.html.twig', array('categories'=>$categories, 'baskets' => $baskets));  
+})->bind('basket');

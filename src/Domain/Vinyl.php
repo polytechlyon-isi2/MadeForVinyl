@@ -28,7 +28,7 @@ class Vinyl
     /**
      * Associated category.
      *
-     * @var \MicroCMS\Domain\Category
+     * @var \MadeForVinyl\Domain\Category
      */
     private $category;
     
