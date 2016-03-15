@@ -1,0 +1,50 @@
+<div class="tab-pane fade in active adminTable" id="Vinyls">
+        {% if vinyls %}
+        <div class="table-hover">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th class="hidden-xs">Catégorie</th>
+                        <th class="hidden-xs">Prix</th>
+                    </tr>
+                </thead>
+                {% for vinyl in vinyls %}
+                <tr>
+                    <td><a class="vinyltitle" href="{{ path('vinyl', { 'id': vinyl.id }) }}">{{ vinyl.title }}</a></td>
+                    <td class="hidden-xs">{{ vinyl.category.title }}</td>
+                    <td class="hidden-xs">{{ vinyl.price }} € </td>
+                    <td>
+                        <a href="{{ path('profil', { 'id': vinyl.id }) }}" class="btn btn-info btn-xs" title="Edit">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#vinylDialog{{ vinyl.id }}">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <div class="modal fade" id="vinylDialog{{ vinyl.id }}" tabindex="-1" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Confirmation :</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Voulez-vous vraiment supprimer ce vinyl ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <a href="{{ path('admin_vinyl_delete', { 'id': vinyl.id }) }}" class="btn btn-danger">Confirm</a>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-warning">Pas de vinyl.</div>
+        {% endif %}
+        <a href="#"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Ajouter Vinyl</button></a>
+    </div>

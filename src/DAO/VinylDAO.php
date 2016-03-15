@@ -33,6 +33,17 @@ class VinylDAO extends DAO
         }
         return $vinyls;
     }
+    
+    /**
+     * Removes a vinyl from the database.
+     *
+     * @param integer $id The vinyl id.
+     */
+    public function delete($id) {
+        // Delete the article
+        $this->getDb()->delete('t_vinyl', array('vinyl_id' => $id));
+    }
+    
     /**
      * Returns the list of all Vinyls
      *

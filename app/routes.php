@@ -99,3 +99,21 @@ $app->get('/profil/{id}', function ($id) use ($app) {
     $user = $app['dao.user']->find($id);
     return $app['twig']->render('profil.html.twig',array('categories' => $categories, 'user' => $user));
 })->bind('profil');
+
+// Remove an vinyl
+$app->get('/admin/vinyl/{id}/delete', function($id, Request $request) use ($app) {
+    // Delete the vinyl
+    $app['dao.vinyl']->delete($id);
+    $app['session']->getFlashBag()->add('success', 'Le vinyl a bien été supprimé.');
+    // Redirect to admin home page
+    return $app->redirect($app['url_generator']->generate('admin'));
+})->bind('admin_vinyl_delete');
+
+// Remove an user
+$app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) {
+    // Delete the user
+    $app['dao.user']->delete($id);
+    $app['session']->getFlashBag()->add('success', "L'utilisateur a bien été supprimé.");
+    // Redirect to admin home page
+    return $app->redirect($app['url_generator']->generate('admin'));
+})->bind('admin_user_delete');

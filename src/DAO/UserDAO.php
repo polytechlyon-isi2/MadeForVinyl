@@ -26,7 +26,7 @@ class UserDAO extends DAO implements UserProviderInterface
         else
             throw new \Exception("No user matching id " . $id);
     }
-
+    
     /**
      * Returns the list of all Vinyls
      *
