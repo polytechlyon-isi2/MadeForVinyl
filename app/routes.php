@@ -117,3 +117,11 @@ $app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) 
     // Redirect to admin home page
     return $app->redirect($app['url_generator']->generate('admin'));
 })->bind('admin_user_delete');
+
+// Basket page
+$app->get('/panier/{id}', function ($id) use ($app){
+    $categories = $app['dao.category']->findAll();
+    $baskets = $app['dao.basket']->findAllByIdUser($id);
+
+    return $app['twig']->render('basket.html.twig', array('categories'=>$categories, 'baskets' => $baskets));  
+})->bind('basket');
