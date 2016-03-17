@@ -28,11 +28,11 @@
                                             <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
                                         </div>
                                         <div class="modal-body">
-                                            Voulez vous vraiment supprimer cette categorie ? Ceci peut engendrer la suppression de plusieurs vinyls...
+                                            Voulez vous vraiment supprimer cette categorie ? <br>Ceci peut engendrer la suppression de plusieurs vinyls...
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                            <a href="{{ path('category', { 'id': category.id }) }}" class="btn btn-danger">Confirm</a>
+                                            <a href="{{ path('admin_category_delete', { 'id': category.id }) }}" class="btn btn-danger">Confirm</a>
                                         </div>
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->

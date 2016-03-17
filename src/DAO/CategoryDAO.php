@@ -41,6 +41,16 @@ class CategoryDAO extends DAO
     }
     
     /**
+     * Removes a category from the database.
+     *
+     * @param integer $id The category id.
+     */
+    public function delete($id) {
+        // Delete the category
+        $this->getDb()->delete('t_category', array('category_id' => $id));
+    }
+    
+    /**
      * Creates a Category object based on a DB row.
      *
      * @param array $row The DB row containing Category data.

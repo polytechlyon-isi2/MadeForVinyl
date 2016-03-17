@@ -118,6 +118,17 @@ $app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) 
     return $app->redirect($app['url_generator']->generate('admin'));
 })->bind('admin_user_delete');
 
+// Remove an user
+$app->get('/admin/category/{id}/delete', function($id, Request $request) use ($app) {
+    // Delete all vinyl which have the same category
+    $app['dao.vinyl']->deleteByCategory($id);
+    // Delete the category
+    $app['dao.category']->delete($id);
+    $app['session']->getFlashBag()->add('success', "La catégorie a bien été supprimée.");
+    // Redirect to admin home page
+    return $app->redirect($app['url_generator']->generate('admin'));
+})->bind('admin_category_delete');
+
 // Basket page
 $app->get('/panier/{id}', function ($id) use ($app){
     $categories = $app['dao.category']->findAll();

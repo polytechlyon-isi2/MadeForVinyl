@@ -15,7 +15,6 @@ class ProfilType extends AbstractType
             ->add('adress', 'text',array('label'=>'Adresse'))
             ->add('postalCode', 'integer',array('label'=>'Code Postal'))
             ->add('town', 'text',array('label'=>'Ville'))
-            ->add('username', 'text',array('label'=>'Adresse mail'))
             ->add('password', 'repeated', array(
                 'type'            => 'password',
                 'invalid_message' => 'The password fields must match.',
