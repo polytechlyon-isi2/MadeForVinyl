@@ -1,0 +1,91 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Ajouter un Vinyl{% endblock %}
+{% block titleH1 %}Ajouter un Vinyl{% endblock %}
+{% block content %}
+
+
+{% for flashMessage in app.session.flashbag.get('success') %}
+<div class="alert alert-success">
+    {{ flashMessage }}
+    <META HTTP-EQUIV="Refresh" CONTENT="1;URL= {{ path('admin') }}">
+</div>
+{% endfor %}
+
+{{ form_start(vinylForm, { 'attr': {'class': 'form-horizontal'} }) }}
+    <div class="form-group">
+        {{ form_label(vinylForm.title, null, { 'label_attr':  {
+            'class': 'col-sm-5 control-label'
+        }}) }}
+        <div class="col-sm-4">
+            {{ form_errors(vinylForm.title) }}
+            {{ form_widget(vinylForm.title, { 'attr':  {
+                'class': 'form-control'
+            }}) }}
+        </div>
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(vinylForm.artist, null, { 'label_attr':  {
+            'class': 'col-sm-5 control-label'
+        }}) }}
+        <div class="col-sm-4">
+            {{ form_errors(vinylForm.artist) }}
+            {{ form_widget(vinylForm.artist, { 'attr':  {
+                'class': 'form-control'
+            }}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(vinylForm.year, null, { 'label_attr':  {
+            'class': 'col-sm-5 control-label'
+        }}) }}
+        <div class="col-sm-4">
+            {{ form_errors(vinylForm.year) }}
+            {{ form_widget(vinylForm.year, { 'attr':  {
+                'class': 'form-control'
+            }}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(vinylForm.category, null, { 'label_attr':  {
+            'class': 'col-sm-5 control-label'
+        }}) }}
+        <div class="col-sm-4">
+            {{ form_errors(vinylForm.category) }}
+            {{ form_widget(vinylForm.category, { 'attr':  {
+                'class': 'form-control'
+            }}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(vinylForm.price, null, { 'label_attr':  {
+            'class': 'col-sm-5 control-label'
+        }}) }}
+        <div class="col-sm-4">
+            {{ form_errors(vinylForm.price) }}
+            {{ form_widget(vinylForm.price, { 'attr':  {
+                'class': 'form-control'
+            }}) }}
+        </div>
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(vinylForm.sleeve, null, { 'label_attr':  {
+            'class': 'col-sm-5 control-label'
+        }}) }}
+        <div class="col-sm-4">
+            {{ form_errors(vinylForm.sleeve) }}
+            {{ form_widget(vinylForm.sleeve, { 'attr':  {
+                'class': 'form-control'
+            }}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-5 col-sm-3">
+            <input type="submit" class="btn btn-primary" value="Enregistrer" />
+    </div>        
+{{ form_end(vinylForm) }}
+</div>
+{% endblock %}

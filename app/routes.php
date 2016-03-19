@@ -1,8 +1,12 @@
 <?php
 use Symfony\Component\HttpFoundation\Request;
 use MadeForVinyl\Domain\User;
+use MadeForVinyl\Domain\Category;
+use MadeForVinyl\Domain\Vinyl;
 use MadeForVinyl\Form\Type\InscriptionType;
 use MadeForVinyl\Form\Type\ProfilType;
+use MadeForVinyl\Form\Type\VinylType;
+use MadeForVinyl\Form\Type\CategoryType;
 
 // Home page
 $app->get('/', function () use ($app) {
@@ -108,6 +112,36 @@ $app->get('/admin/vinyl/{id}/delete', function($id, Request $request) use ($app)
     // Redirect to admin home page
     return $app->redirect($app['url_generator']->generate('admin'));
 })->bind('admin_vinyl_delete');
+
+// Add an vinyl form
+$app->match('/admin/vinyl/add', function(Request $request) use ($app) {
+    $categories = $app['dao.category']->findAll();
+    // create the vinyl
+    $vinyl = new Vinyl();
+    $vinylForm = $app['form.factory']->create(new VinylType(), $vinyl);
+    $vinylForm->handleRequest($request);
+    if ($vinylForm->isSubmitted() && $vinylForm->isValid()) {
+        $app['dao.vinyl']->save($vinyl);
+        $app['session']->getFlashBag()->add('success', 'The article was successfully created.');
+    }
+    return $app['twig']->render('vinyl_form.html.twig', array(
+        'vinylForm' => $vinylForm->createView(), 'categories' => $categories));
+})->bind('admin_vinyl_add');
+
+// Add an vinyl form
+$app->match('/admin/category/add', function(Request $request) use ($app) {
+    $categories = $app['dao.category']->findAll();
+    // create the vinyl
+    $category = new Category();
+    $categoryForm = $app['form.factory']->create(new CategoryType(), $category);
+    $categoryForm->handleRequest($request);
+    if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
+        $app['dao.category']->save($category);
+        $app['session']->getFlashBag()->add('success', 'The category was successfully created.');
+    }
+    return $app['twig']->render('category_form.html.twig', array(
+        'categoryForm' => $categoryForm->createView(), 'categories' => $categories));
+})->bind('admin_category_add');
 
 // Remove an user
 $app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) {

@@ -12,7 +12,7 @@ class CategoryDAO extends DAO
      * @return array A list of all Categories.
      */
     public function findAll() {
-        $sql = "select * from t_category";
+        $sql = "select * from t_category order by category_title";
         $result = $this->getDb()->fetchAll($sql);
 
         // Convert query result to an array of domain objects
@@ -48,6 +48,26 @@ class CategoryDAO extends DAO
     public function delete($id) {
         // Delete the category
         $this->getDb()->delete('t_category', array('category_id' => $id));
+    }
+    /**
+     * Saves a category into the database.
+     *
+     * @param \MadeForVinyl\Domain\category $category The category to save
+     */
+    public function save(Category $category) {
+        $categoryData = array(
+            'category_title' => $category->getTitle(),
+            );
+        if ($category->getId()) {
+            // The vinyl has already been saved : update it
+            $this->getDb()->update('t_category', $categoryData, array('category_id' => $category->getId()));
+        } else {
+            // The vinyl has never been saved : insert it
+            $this->getDb()->insert('t_category', $categoryData);
+            // Get the id of the newly created article and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $category->setId($id);
+        }
     }
     
     /**

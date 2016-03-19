@@ -90,6 +90,32 @@ class VinylDAO extends DAO
     }
     
     /**
+     * Saves a Vinyl into the database.
+     *
+     * @param \MadeForVinyl\Domain\Vinyl $vinyl The vinyl to save
+     */
+    public function save(Vinyl $vinyl) {
+        $vinylData = array(
+            'vinyl_title' => $vinyl->getTitle(),
+            'vinyl_artist' => $vinyl->getArtist(),
+            'vinyl_category' => $vinyl->getCategory(),
+            'vinyl_year' => $vinyl->getYear(),
+            'vinyl_price' => $vinyl->getPrice(),
+            'vinyl_sleeve' => $vinyl->getSleeve(),
+            );
+        if ($vinyl->getId()) {
+            // The vinyl has already been saved : update it
+            $this->getDb()->update('t_vinyl', $vinylData, array('vinyl_id' => $vinyl->getId()));
+        } else {
+            // The vinyl has never been saved : insert it
+            $this->getDb()->insert('t_vinyl', $vinylData);
+            // Get the id of the newly created article and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $vinyl->setId($id);
+        }
+    }
+    
+    /**
      * Creates an Vinyl object based on a DB row.
      *
      * @param array $row The DB row containing Vinyl data.

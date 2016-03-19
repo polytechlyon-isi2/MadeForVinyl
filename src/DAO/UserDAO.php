@@ -61,7 +61,7 @@ class UserDAO extends DAO implements UserProviderInterface
             'usr_login' => $user->getUsername(),
             'usr_salt' => $user->getSalt(),
             'usr_password' => $user->getPassword(),
-            'usr_role' => 'User'
+            'usr_role' => 'ROLE_USER'
             );
         if ($user->getId()) {
             // The user has already been saved : update it
