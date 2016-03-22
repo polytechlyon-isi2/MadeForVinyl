@@ -15,7 +15,7 @@
                     <td class="hidden-xs">{{ vinyl.category.title }}</td>
                     <td class="hidden-xs">{{ vinyl.price }} € </td>
                     <td>
-                        <a href="{{ path('profil', { 'id': vinyl.id }) }}" class="btn btn-info btn-xs" title="Edit">
+                        <a href="{{ path('admin_vinyl_edit', { 'id': vinyl.id }) }}" class="btn btn-info btn-xs" title="Edit">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
                         <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#vinylDialog{{ vinyl.id }}">

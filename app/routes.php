@@ -58,7 +58,7 @@ $app->match('/inscription', function(Request $request) use ($app) {
         $user->setPassword($password); 
         $user->setRole('ROLE-USER');
         $app['dao.user']->save($user);
-        $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
+        $app['session']->getFlashBag()->add('success', "L'utilisateur a bien été créé");
         $app->redirect($app['url_generator']->generate('home'));
     }
     return $app['twig']->render('inscription_form.html.twig', array('categories' => $categories,
@@ -72,8 +72,8 @@ $app->get('/profil/{id}', function ($id) use ($app) {
     return $app['twig']->render('profil.html.twig',array('categories' => $categories, 'user' => $user));
 })->bind('profil');
 
-// Modify a Default user form
-$app->match('/modifProfil/{id}', function(Request $request, $id) use ($app) {
+// Edit a Default user form
+$app->match('/edit_Profil/{id}', function(Request $request, $id) use ($app) {
     $categories = $app['dao.category']->findAll();
     $user = $app['dao.user']->find($id);
     $profilForm = $app['form.factory']->create(new ProfilType(), $user);
@@ -89,12 +89,15 @@ $app->match('/modifProfil/{id}', function(Request $request, $id) use ($app) {
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password);
         $app['dao.user']->save($user);
-        $app['session']->getFlashBag()->add('success', 'The user was successfully modified.');
+        $app['session']->getFlashBag()->add('success', "Vos données ont bien été modifiés");
         $app->redirect($app['url_generator']->generate('home'));
     }
-    return $app['twig']->render('profil_form.html.twig', array('user' => $user, 'categories' => $categories,
+    return $app['twig']->render('profil_form.html.twig', array(
+        'user' => $user, 
+        'categories' => $categories,
+        'title' => "Modifier vos données",
         'profilForm' => $profilForm->createView()));
-})->bind('modifProfil');
+})->bind('edit_Profil');
 
 // Admin home page
 $app->get('/admin', function() use ($app) {
@@ -119,14 +122,16 @@ $app->match('/admin/vinyl/add', function(Request $request) use ($app) {
         $category = $app['dao.category']->find($categoryId);
         $vinyl->setCategory($category);
         $app['dao.vinyl']->save($vinyl);
-        $app['session']->getFlashBag()->add('success', 'The vinyl was successfully created.');
+        $app['session']->getFlashBag()->add('success', "Le vinyl a bien été créé");
     }
     return $app['twig']->render('vinyl_form.html.twig', array(
-        'vinylForm' => $vinylForm->createView(), 'categories' => $categories));
+        'title' => "Ajout Vinyl",        
+        'vinylForm' => $vinylForm->createView(), 
+        'categories' => $categories));
 })->bind('admin_vinyl_add');
 
 // Add a user form
-$app->match('/admin/category/add', function(Request $request) use ($app){
+$app->match('/admin/user/add', function(Request $request) use ($app){
     $categories = $app['dao.category']->findAll();
     $user = new User();
     $userForm = $app['form.factory']->create(new UserType(), $user);
@@ -142,10 +147,12 @@ $app->match('/admin/category/add', function(Request $request) use ($app){
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password); 
         $app['dao.user']->save($user);
-        $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
+        $app['session']->getFlashBag()->add('success', "L'utilisateur a bien été créé");
     }
     return $app['twig']->render('user_form.html.twig', array(
-        'userForm' => $userForm->createView(), 'categories' => $categories));
+        'title' => "Ajout Utilisateur",        
+        'userForm' => $userForm->createView(), 
+        'categories' => $categories));
 })->bind('admin_user_add');
 
 // Add a category form
@@ -157,10 +164,12 @@ $app->match('/admin/category/add', function(Request $request) use ($app) {
     $categoryForm->handleRequest($request);
     if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
         $app['dao.category']->save($category);
-        $app['session']->getFlashBag()->add('success', 'The category was successfully created.');
+        $app['session']->getFlashBag()->add('success', "La catégorie a bien été créée");
     }
     return $app['twig']->render('category_form.html.twig', array(
-        'categoryForm' => $categoryForm->createView(), 'categories' => $categories));
+        'title' => "Ajout Catégorie",        
+        'categoryForm' => $categoryForm->createView(), 
+        'categories' => $categories));
 })->bind('admin_category_add');
 
 // Remove a vinyl
@@ -194,6 +203,70 @@ $app->get('/admin/category/{id}/delete', function($id, Request $request) use ($a
     return $app->redirect($app['url_generator']->generate('admin'));
 })->bind('admin_category_delete');
 
+// edit a user form
+$app->match('/admin/user/{id}/edit', function(Request $request, $id) use ($app) {
+    $categories = $app['dao.category']->findAll();
+    $user = $app['dao.user']->find($id);
+    $userForm = $app['form.factory']->create(new UserType(), $user);
+    $userForm->handleRequest($request);
+    if ($userForm->isSubmitted() && $userForm->isValid()) {
+        // generate a random salt value
+        $salt = substr(md5(time()), 0, 23);
+        $user->setSalt($salt);
+        $plainPassword = $user->getPassword();
+        // find the default encoder
+        $encoder = $app['security.encoder.digest'];
+        // compute the encoded password
+        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+        $user->setPassword($password);
+        $app['dao.user']->save($user);
+        $app['session']->getFlashBag()->add('success', "L'utilisateur a bien été modifié");
+        $app->redirect($app['url_generator']->generate('home'));
+    }
+    return $app['twig']->render('user_form.html.twig', array(
+        'user' => $user, 
+        'categories' => $categories,
+        'title' => "Modification Utilisateur",
+        'userForm' => $userForm->createView()));
+})->bind('admin_user_edit');
+
+// edit a vinyl form
+$app->match('/admin/vinyl/{id}/edit', function(Request $request, $id) use ($app) {
+    $categories = $app['dao.category']->findAll();
+    $vinyl = $app['dao.vinyl']->find($id);
+    $vinylForm = $app['form.factory']->create(new VinylType($categories), $vinyl);
+    $vinylForm->handleRequest($request);
+    if ($vinylForm->isSubmitted() && $vinylForm->isValid()) {
+        $categoryId = $vinylForm->get("category")->getData();
+        $category = $app['dao.category']->find($categoryId);
+        $vinyl->setCategory($category);
+        $app['dao.vinyl']->save($vinyl);
+        $app['session']->getFlashBag()->add('success', "Le vinyl a bien été modifié");
+    }
+    return $app['twig']->render('vinyl_form.html.twig', array(
+        'vinyl' => $vinyl, 
+        'categories' => $categories,
+        'title' => "Modification Vinyl",
+        'vinylForm' => $vinylForm->createView()));
+})->bind('admin_vinyl_edit');
+
+// edit a category form
+$app->match('/admin/category/{id}/edit', function(Request $request, $id) use ($app) {
+    $categories = $app['dao.category']->findAll();
+    $category = $app['dao.category']->find($id);
+    $categoryForm = $app['form.factory']->create(new CategoryType(), $category);
+    $categoryForm->handleRequest($request);
+    if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
+        $app['dao.category']->save($category);
+        $app['session']->getFlashBag()->add('success', "La catégory a bien été modifié");
+        $app->redirect($app['url_generator']->generate('home'));
+    }
+    return $app['twig']->render('category_form.html.twig', array(
+        'category' => $category, 
+        'categories' => $categories,
+        'title' => "Modification Category",
+        'categoryForm' => $categoryForm->createView()));
+})->bind('admin_category_edit');
 
 // Basket page
 $app->get('/panier/{id}', function ($id) use ($app){
