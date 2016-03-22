@@ -56,10 +56,10 @@ $app->match('/inscription', function(Request $request) use ($app) {
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password); 
-        $user->setRole('ROLE-USER');
-        $app['dao.user']->save($user);
-        $app['session']->getFlashBag()->add('success', "L'utilisateur a bien été créé");
-        $app->redirect($app['url_generator']->generate('home'));
+        $user->setRole('ROLE-USER');   
+            $app['dao.user']->save($user);
+            $app->redirect($app['url_generator']->generate('home'));
+    
     }
     return $app['twig']->render('inscription_form.html.twig', array('categories' => $categories,
         'userForm' => $userForm->createView()));

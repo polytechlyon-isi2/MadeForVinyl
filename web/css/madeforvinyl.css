@@ -62,11 +62,11 @@ h1{
 /* CSS RED CONTAINER */
 
 /* CSS TABLES */
-.table-hover tr:hover{
+.table-hover tbody tr:hover{
     cursor: pointer;
     background-color: chocolate !important;
 }
-.table-hover tr{
+.table-hover tbody tr{
     background-color: transparent;
     transition: background-color 500ms ease;
 }
@@ -109,11 +109,9 @@ h1{
 }
 /* END CSS VINYLS SLEEVES */
 
+/* CSS TAB ADMIN */
 .control-label{
     font-size: 15px;
-}
-.modal-dialog{
-    color:black;
 }
 .nav-tabs li:hover a{
     color: black !important;
@@ -121,6 +119,14 @@ h1{
 .nav-tabs a{
     transition: all 0.5s ease 0s;
 }
+/* END CSS TAB ADMIN */
+
+/* CSS POPOUT */
+.modal-dialog{
+    color:black;
+}
+/* END POPOUT */
+
 /* SCALE WITH SCREEN SIZE */
 @media screen and (max-width: 600px){
     h1{
