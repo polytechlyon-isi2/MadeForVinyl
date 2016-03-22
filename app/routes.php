@@ -8,6 +8,7 @@ use MadeForVinyl\Form\Type\ProfilType;
 use MadeForVinyl\Form\Type\VinylType;
 use MadeForVinyl\Form\Type\CategoryType;
 use MadeForVinyl\Domain\Basket;
+use MadeForVinyl\Form\Type\UserType;
 
 // Home page
 $app->get('/', function () use ($app) {
@@ -39,7 +40,7 @@ $app->get('/login', function(Request $request) use ($app) {
     ));
 })->bind('login');
 
-// Add a user form
+// Add a default user form
 $app->match('/inscription', function(Request $request) use ($app) {
     $categories = $app['dao.category']->findAll();
     $user = new User();
@@ -55,7 +56,8 @@ $app->match('/inscription', function(Request $request) use ($app) {
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password); 
-        $app['dao.user']->saveDefaultUser($user);
+        $user->setRole('ROLE-USER');
+        $app['dao.user']->save($user);
         $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
         $app->redirect($app['url_generator']->generate('home'));
     }
@@ -131,6 +133,29 @@ $app->match('/admin/vinyl/add', function(Request $request) use ($app) {
     return $app['twig']->render('vinyl_form.html.twig', array(
         'vinylForm' => $vinylForm->createView(), 'categories' => $categories));
 })->bind('admin_vinyl_add');
+
+// Add a user form
+$app->match('/admin/category/add', function(Request $request) use ($app){
+    $categories = $app['dao.category']->findAll();
+    $user = new User();
+    $userForm = $app['form.factory']->create(new UserType(), $user);
+    $userForm->handleRequest($request);
+    if ($userForm->isSubmitted() && $userForm->isValid()) {
+        // generate a random salt value
+        $salt = substr(md5(time()), 0, 23);
+        $user->setSalt($salt);
+        $plainPassword = $user->getPassword();
+        // find the default encoder
+        $encoder = $app['security.encoder.digest'];
+        // compute the encoded password
+        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+        $user->setPassword($password); 
+        $app['dao.user']->save($user);
+        $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
+    }
+    return $app['twig']->render('user_form.html.twig', array(
+        'userForm' => $userForm->createView(), 'categories' => $categories));
+})->bind('admin_user_add');
 
 // Add an category form
 $app->match('/admin/category/add', function(Request $request) use ($app) {
