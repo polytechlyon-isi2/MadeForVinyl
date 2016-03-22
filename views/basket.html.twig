@@ -6,10 +6,29 @@
 Mon Panier
 {% endblock %}
 
-{% block content %}
-        {% for basket in baskets %}
-        
-        {% else %}
-            <h2>Vous n'avez rien dans votre panier! Continuez vos achats... </h2>
+{% block content %}  
+{% if baskets %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Article</th>
+        <th>Prix unitaire</th>
+        <th>Quantité</th>
+        <th>Prix TTC</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for basket in baskets %} 
+      <tr>
+        <td>{{ basket.vinyl.title }}</td>
+        <td>{{ basket.vinyl.price }}</td>
+        <td>Quantité à remplir</td>
+        <td>Prix</td>
+      </tr>
         {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+            <h2>Vous n'avez rien dans votre panier! Continuez vos achats... </h2>
+{% endif %}
 {% endblock %}

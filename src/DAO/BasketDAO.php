@@ -58,23 +58,23 @@ class BasketDAO extends DAO
      * @return \MadeForVinyl\Domain\Basket
      */
     protected function buildDomainObject($row) {
-        $basket = new Vinyl();
+        $basket = new Basket();
         $basket->setId($row['basket_id']);
         
         if (array_key_exists('basket_owner', $row)) {
             // Find and set the associated user
-            $userId = $row['usr_id'];
+            $userId = $row['basket_owner'];
             $user = $this->userDAO->find($userId);
             $basket->setOwner($user);
         }
         if (array_key_exists('basket_vinyl', $row)) {
             // Find and set the associated user
-            $vinylId = $row['vinyl_id'];
+            $vinylId = $row['basket_vinyl'];
             $vinyl = $this->vinylDAO->find($vinylId);
             $basket->setVinyl($vinyl);
         }
         
-        return $vinyl;
+        return $basket;
     }
     
     
