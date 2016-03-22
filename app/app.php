@@ -34,31 +34,30 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
         array('^/admin', 'ROLE_ADMIN'),
     ),
 ));
-
 $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\TranslationServiceProvider());
-
+$app->register(new Silex\Provider\ValidatorServiceProvider());
 $app['twig'] = $app->share($app->extend('twig', function(Twig_Environment $twig, $app) {
     $twig->addExtension(new Twig_Extensions_Extension_Text());
     return $twig;
 }));
-$app->register(new Silex\Provider\ValidatorServiceProvider());
 
 // Register services
+//Categories
 $app['dao.category'] = $app->share(function ($app) {
     return new MadeForVinyl\DAO\CategoryDAO($app['db']);
 });
+//Vinyls
 $app['dao.vinyl'] = $app->share(function ($app) {
     $vinylDAO = new MadeForVinyl\DAO\VinylDAO($app['db']);
     $vinylDAO->setCategoryDAO($app['dao.category']);
     return $vinylDAO;
 });
-
-
+//Users
 $app['dao.user'] = $app->share(function ($app) {
     return new MadeForVinyl\DAO\UserDAO($app['db']);
 });
-
+//Baskets
 $app['dao.basket'] = $app->share(function ($app){
     $basketDAO = new MadeForVinyl\DAO\BasketDAO($app['db']);
     $basketDAO->setUserDAO($app['dao.user']);

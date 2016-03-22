@@ -27,17 +27,23 @@ class UserDAO extends DAO implements UserProviderInterface
             throw new \Exception("No user matching id " . $id);
     }
     
+    /**
+     * Delete a user matching the supplied id.
+     *
+     * @param integer $id The user id.
+     *
+     */
     public function delete($id) {
         // Delete the user
         $this->getDb()->delete('t_user', array('usr_id' => $id));
     }
     
     /**
-     * Returns the list of all Vinyls
+     * Returns the list of all Users
      *
      * @param empty
      *
-     * @return \MadeForVinyl\Domain\Vinyl
+     * @return \MadeForVinyl\Domain\User
      */
     public function findAll() {
         $sql = "select * from t_user";

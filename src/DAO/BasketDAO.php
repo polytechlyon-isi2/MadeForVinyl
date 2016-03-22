@@ -22,6 +22,13 @@ class BasketDAO extends DAO
             throw new \Exception("No article matching id " . $idUser);
     }
     
+    /**
+     * Returns all Baskets matching the supplied id of the user.
+     *
+     * @param integer $idUser
+     *
+     * @return \MadeForVinyl\Domain\Basket |throws an exception if no matching basket is found
+     */
      public function findAllByIdUser($idUser) {
         $sql = "select * from t_basket where basket_owner=?";
         
@@ -34,8 +41,22 @@ class BasketDAO extends DAO
         return $baskets;
     }
     
+    /**
+     * Removes all vinyl for a category.
+     *
+     * @param integer $idUser the user id.
+     */
+     public function deleteByUser($idUser){
+        // Delete all baskets of user
+        $this->getDb()->delete('t_basket', array('basket_owner' => $idUser));
+    }
+    
+    /**
+     * Saves a basket into the database.
+     *
+     * @param \MadeForVinyl\Domain\Basket $basket the basket to save
+     */
     public function save(Basket $basket) {
-        
         $basketData = array(
             'basket_owner' => $basket->getOwner()->getId(),
             'basket_vinyl' => $basket->getVinyl()->getId(),
@@ -45,8 +66,7 @@ class BasketDAO extends DAO
             // Get the id of the newly created article and set it on the entity.
             $id = $this->getDb()->lastInsertId();
             $basket->setId($id);
-        }
-    
+    }
     
     /**
      * @var \MadeForVinyl\DAO\UserDAO

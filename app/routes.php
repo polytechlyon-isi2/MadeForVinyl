@@ -24,7 +24,7 @@ $app->get('/category/{id}', function ($id) use ($app) {
     return $app['twig']->render('category.html.twig',array('vinyls' => $vinyls, 'categories' => $categories, 'category' => $category));
 })->bind('category');
 
-// vinyl page
+// vinyl details page
 $app->get('/vinyl/{id}', function($id) use ($app){
     $categories = $app['dao.category']->findAll();
     $vinyl = $app['dao.vinyl']->find($id);
@@ -40,7 +40,7 @@ $app->get('/login', function(Request $request) use ($app) {
     ));
 })->bind('login');
 
-// Add a default user form
+// inscription of a default user form
 $app->match('/inscription', function(Request $request) use ($app) {
     $categories = $app['dao.category']->findAll();
     $user = new User();
@@ -65,18 +65,14 @@ $app->match('/inscription', function(Request $request) use ($app) {
         'userForm' => $userForm->createView()));
 })->bind('inscription');
 
-// Admin home page
-$app->get('/admin', function() use ($app) {
+// Profil
+$app->get('/profil/{id}', function ($id) use ($app) {
     $categories = $app['dao.category']->findAll();
-    $vinyls = $app['dao.vinyl']->findAll();
-    $users = $app['dao.user']->findAll();
-    return $app['twig']->render('admin.html.twig', array(
-        'categories' => $categories,
-        'vinyls' => $vinyls,
-        'users' => $users));
-})->bind('admin');
+    $user = $app['dao.user']->find($id);
+    return $app['twig']->render('profil.html.twig',array('categories' => $categories, 'user' => $user));
+})->bind('profil');
 
-// Modify a user form
+// Modify a Default user form
 $app->match('/modifProfil/{id}', function(Request $request, $id) use ($app) {
     $categories = $app['dao.category']->findAll();
     $user = $app['dao.user']->find($id);
@@ -92,7 +88,7 @@ $app->match('/modifProfil/{id}', function(Request $request, $id) use ($app) {
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password);
-        $app['dao.user']->saveDefaultUser($user);
+        $app['dao.user']->save($user);
         $app['session']->getFlashBag()->add('success', 'The user was successfully modified.');
         $app->redirect($app['url_generator']->generate('home'));
     }
@@ -100,23 +96,18 @@ $app->match('/modifProfil/{id}', function(Request $request, $id) use ($app) {
         'profilForm' => $profilForm->createView()));
 })->bind('modifProfil');
 
-// Profil
-$app->get('/profil/{id}', function ($id) use ($app) {
+// Admin home page
+$app->get('/admin', function() use ($app) {
     $categories = $app['dao.category']->findAll();
-    $user = $app['dao.user']->find($id);
-    return $app['twig']->render('profil.html.twig',array('categories' => $categories, 'user' => $user));
-})->bind('profil');
+    $vinyls = $app['dao.vinyl']->findAll();
+    $users = $app['dao.user']->findAll();
+    return $app['twig']->render('admin.html.twig', array(
+        'categories' => $categories,
+        'vinyls' => $vinyls,
+        'users' => $users));
+})->bind('admin');
 
-// Remove an vinyl
-$app->get('/admin/vinyl/{id}/delete', function($id, Request $request) use ($app) {
-    // Delete the vinyl
-    $app['dao.vinyl']->delete($id);
-    $app['session']->getFlashBag()->add('success', 'Le vinyl a bien été supprimé.');
-    // Redirect to admin home page
-    return $app->redirect($app['url_generator']->generate('admin'));
-})->bind('admin_vinyl_delete');
-
-// Add an vinyl form
+// Add a vinyl form
 $app->match('/admin/vinyl/add', function(Request $request) use ($app) {
     $categories = $app['dao.category']->findAll();
     // create the vinyl
@@ -157,7 +148,7 @@ $app->match('/admin/category/add', function(Request $request) use ($app){
         'userForm' => $userForm->createView(), 'categories' => $categories));
 })->bind('admin_user_add');
 
-// Add an category form
+// Add a category form
 $app->match('/admin/category/add', function(Request $request) use ($app) {
     $categories = $app['dao.category']->findAll();
     // create the vinyl
@@ -172,8 +163,19 @@ $app->match('/admin/category/add', function(Request $request) use ($app) {
         'categoryForm' => $categoryForm->createView(), 'categories' => $categories));
 })->bind('admin_category_add');
 
-// Remove an user
+// Remove a vinyl
+$app->get('/admin/vinyl/{id}/delete', function($id, Request $request) use ($app) {
+    // Delete the vinyl
+    $app['dao.vinyl']->delete($id);
+    $app['session']->getFlashBag()->add('success', 'Le vinyl a bien été supprimé.');
+    // Redirect to admin home page
+    return $app->redirect($app['url_generator']->generate('admin'));
+})->bind('admin_vinyl_delete');
+
+// Remove a user
 $app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) {
+    //Delete baskets of the user
+    $app['dao.basket']->deleteByUser($id);
     // Delete the user
     $app['dao.user']->delete($id);
     $app['session']->getFlashBag()->add('success', "L'utilisateur a bien été supprimé.");
@@ -181,7 +183,7 @@ $app->get('/admin/user/{id}/delete', function($id, Request $request) use ($app) 
     return $app->redirect($app['url_generator']->generate('admin'));
 })->bind('admin_user_delete');
 
-// Remove an user
+// Remove a category
 $app->get('/admin/category/{id}/delete', function($id, Request $request) use ($app) {
     // Delete all vinyl which have the same category
     $app['dao.vinyl']->deleteByCategory($id);
@@ -191,6 +193,7 @@ $app->get('/admin/category/{id}/delete', function($id, Request $request) use ($a
     // Redirect to admin home page
     return $app->redirect($app['url_generator']->generate('admin'));
 })->bind('admin_category_delete');
+
 
 // Basket page
 $app->get('/panier/{id}', function ($id) use ($app){
