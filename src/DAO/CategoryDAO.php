@@ -25,6 +25,25 @@ class CategoryDAO extends DAO
     }
     
     /**
+     * Return the list of all Categories,
+     *
+     * @return array A list of all Categories.
+     */
+    public function findAllName() {
+        $sql = "select * from t_category order by category_title";
+        $result = $this->getDb()->fetchAll($sql);
+
+        // Convert query result to an array of domain objects
+        $categoriesNames = array();
+        foreach ($result as $row) 
+        {
+            $categoryName = $row['category_title'];
+            $categoriesNames[$categoryName] = $this->buildDomainObject($row);
+        }
+        return $categoriesNames;
+    }
+    
+    /**
      * Returns a Category matching the supplied id.
      *
      * @param integer $idCategory

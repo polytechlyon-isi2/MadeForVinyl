@@ -118,17 +118,20 @@ $app->match('/admin/vinyl/add', function(Request $request) use ($app) {
     $categories = $app['dao.category']->findAll();
     // create the vinyl
     $vinyl = new Vinyl();
-    $vinylForm = $app['form.factory']->create(new VinylType(), $vinyl);
+    $vinylForm = $app['form.factory']->create(new VinylType($categories), $vinyl);
     $vinylForm->handleRequest($request);
     if ($vinylForm->isSubmitted() && $vinylForm->isValid()) {
+        $categoryId = $vinylForm->get("category")->getData();
+        $category = $app['dao.category']->find($categoryId);
+        $vinyl->setCategory($category);
         $app['dao.vinyl']->save($vinyl);
-        $app['session']->getFlashBag()->add('success', 'The article was successfully created.');
+        $app['session']->getFlashBag()->add('success', 'The vinyl was successfully created.');
     }
     return $app['twig']->render('vinyl_form.html.twig', array(
         'vinylForm' => $vinylForm->createView(), 'categories' => $categories));
 })->bind('admin_vinyl_add');
 
-// Add an vinyl form
+// Add an category form
 $app->match('/admin/category/add', function(Request $request) use ($app) {
     $categories = $app['dao.category']->findAll();
     // create the vinyl

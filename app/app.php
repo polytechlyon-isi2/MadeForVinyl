@@ -45,14 +45,15 @@ $app['twig'] = $app->share($app->extend('twig', function(Twig_Environment $twig,
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 
 // Register services
+$app['dao.category'] = $app->share(function ($app) {
+    return new MadeForVinyl\DAO\CategoryDAO($app['db']);
+});
 $app['dao.vinyl'] = $app->share(function ($app) {
     $vinylDAO = new MadeForVinyl\DAO\VinylDAO($app['db']);
     $vinylDAO->setCategoryDAO($app['dao.category']);
     return $vinylDAO;
 });
-$app['dao.category'] = $app->share(function ($app) {
-    return new MadeForVinyl\DAO\CategoryDAO($app['db']);
-});
+
 
 $app['dao.user'] = $app->share(function ($app) {
     return new MadeForVinyl\DAO\UserDAO($app['db']);

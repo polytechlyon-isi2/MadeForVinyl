@@ -95,10 +95,12 @@ class VinylDAO extends DAO
      * @param \MadeForVinyl\Domain\Vinyl $vinyl The vinyl to save
      */
     public function save(Vinyl $vinyl) {
+        /*$category = $categoryDAO->find($vinyl->getCategory());*/
+        
         $vinylData = array(
             'vinyl_title' => $vinyl->getTitle(),
             'vinyl_artist' => $vinyl->getArtist(),
-            'vinyl_category' => $vinyl->getCategory(),
+            'vinyl_category' => $vinyl -> getCategory() -> getId(),
             'vinyl_year' => $vinyl->getYear(),
             'vinyl_price' => $vinyl->getPrice(),
             'vinyl_sleeve' => $vinyl->getSleeve(),
