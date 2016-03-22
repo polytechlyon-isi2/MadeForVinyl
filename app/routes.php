@@ -7,6 +7,7 @@ use MadeForVinyl\Form\Type\InscriptionType;
 use MadeForVinyl\Form\Type\ProfilType;
 use MadeForVinyl\Form\Type\VinylType;
 use MadeForVinyl\Form\Type\CategoryType;
+use MadeForVinyl\Domain\Basket;
 
 // Home page
 $app->get('/', function () use ($app) {
@@ -173,3 +174,15 @@ $app->get('/panier/{id}', function ($id) use ($app){
 
     return $app['twig']->render('basket.html.twig', array('categories'=>$categories, 'baskets' => $baskets));  
 })->bind('basket');
+
+// Add in a basket
+$app->get('/ajoutPanier/{id}', function($id) use ($app){
+    $basket = new Basket();
+    $categories = $app['dao.category']->findAll();
+    $vinyl = $app['dao.vinyl']->find($id);
+    $basket->setVinyl($vinyl);
+    $basket->setOwner($app['user']); //return connected user
+    $app['dao.basket']->save($basket); 
+    
+    return $app['twig']->render('index.html.twig', array('categories'=>$categories)); //Renvoyez un message
+})->bind('ajoutPanier');

@@ -33,6 +33,21 @@ class BasketDAO extends DAO
         }
         return $baskets;
     }
+    
+    public function save(Basket $basket) {
+        
+        $basketData = array(
+            'basket_owner' => $basket->getOwner()->getId(),
+            'basket_vinyl' => $basket->getVinyl()->getId(),
+            );
+            // The basket has never been saved : insert it
+            $this->getDb()->insert('t_basket', $basketData);
+            // Get the id of the newly created article and set it on the entity.
+            $id = $this->getDb()->lastInsertId();
+            $basket->setId($id);
+        }
+    
+    
     /**
      * @var \MadeForVinyl\DAO\UserDAO
      */
