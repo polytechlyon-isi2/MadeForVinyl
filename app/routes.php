@@ -39,7 +39,7 @@ $app->get('/login', function(Request $request) use ($app) {
     ));
 })->bind('login');
 
-// Add a user form
+// Add a default user form
 $app->match('/inscription', function(Request $request) use ($app) {
     $categories = $app['dao.category']->findAll();
     $user = new User();
@@ -55,7 +55,8 @@ $app->match('/inscription', function(Request $request) use ($app) {
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password); 
-        $app['dao.user']->saveDefaultUser($user);
+        $user->setRole('ROLE-USER');
+        $app['dao.user']->save($user);
         $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
         $app->redirect($app['url_generator']->generate('home'));
     }
