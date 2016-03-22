@@ -27,6 +27,11 @@ class UserDAO extends DAO implements UserProviderInterface
             throw new \Exception("No user matching id " . $id);
     }
     
+    public function delete($id) {
+        // Delete the user
+        $this->getDb()->delete('t_user', array('usr_id' => $id));
+    }
+    
     /**
      * Returns the list of all Vinyls
      *
@@ -51,7 +56,7 @@ class UserDAO extends DAO implements UserProviderInterface
      *
      * @param \MadeForVinyl\Domain\User $user The user to save
      */
-    public function saveDefaultUser(User $user) {
+    public function save(User $user) {
         $userData = array(
             'usr_name' => $user->getName(),
             'usr_surname' => $user->getSurname(),
@@ -61,7 +66,7 @@ class UserDAO extends DAO implements UserProviderInterface
             'usr_login' => $user->getUsername(),
             'usr_salt' => $user->getSalt(),
             'usr_password' => $user->getPassword(),
-            'usr_role' => 'ROLE_USER'
+            'usr_role' => $user->getRole()
             );
         if ($user->getId()) {
             // The user has already been saved : update it
