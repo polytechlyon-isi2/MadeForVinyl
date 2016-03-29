@@ -279,13 +279,16 @@ $app->get('/ajoutPanier/{id}', function($id) use ($app){
     foreach ($baskets as $basket){
         if ($vinyl->getId() == $basket->getVinyl()->getId()){
             $basket->setQuantity($basket->getQuantity()+1);
+            $app['dao.basket']->save($basket); 
         }
     }
-    $newBasket = new Basket();
-    $newBasket->setQuantity(1);
-    $newBasket->setVinyl($vinyl);
-    $newBasket->setOwner($app['user']); //return connected user
-    $app['dao.basket']->save($newBasket); 
+    if(empty($baskets)){
+        $newBasket = new Basket();
+        $newBasket->setQuantity(1);
+        $newBasket->setVinyl($vinyl);
+        $newBasket->setOwner($app['user']); //return connected user
+        $app['dao.basket']->save($newBasket); 
+    }
     $app['session']->getFlashBag()->add('success', "Le vinyl a bien été enregistré dans votre panier");
 
     return $app['twig']->render('vinyl.html.twig',array('categories' => $categories, 'baskets' => $baskets, 'vinyl' => $vinyl));

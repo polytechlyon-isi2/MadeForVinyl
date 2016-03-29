@@ -83,7 +83,7 @@ class CategoryDAO extends DAO
         } else {
             // The vinyl has never been saved : insert it
             $this->getDb()->insert('t_category', $categoryData);
-            // Get the id of the newly created article and set it on the entity.
+            
             $id = $this->getDb()->lastInsertId();
             $category->setId($id);
         }

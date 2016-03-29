@@ -62,11 +62,16 @@ class BasketDAO extends DAO
             'basket_vinyl' => $basket->getVinyl()->getId(),
             'basket_quantity' => $basket->getQuantity(),
             );
+            if ($basket->getId()) {
+            // The basket has already been saved : update it
+            $this->getDb()->update('t_basket', $basketData, array('basket_id' => $basket->getId()));
+        } else {
             // The basket has never been saved : insert it
             $this->getDb()->insert('t_basket', $basketData);
-            // Get the id of the newly created article and set it on the entity.
+            
             $id = $this->getDb()->lastInsertId();
             $basket->setId($id);
+        }
     }
     
     /**
@@ -96,7 +101,7 @@ class BasketDAO extends DAO
     protected function buildDomainObject($row) {
         $basket = new Basket();
         $basket->setId($row['basket_id']);
-        $quantity->setQuantity($row['basket_quantity']);
+        $basket->setQuantity($row['basket_quantity']);
         
         if (array_key_exists('basket_owner', $row)) {
             // Find and set the associated user
