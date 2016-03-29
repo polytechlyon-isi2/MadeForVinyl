@@ -9,6 +9,7 @@ use MadeForVinyl\Form\Type\VinylType;
 use MadeForVinyl\Form\Type\CategoryType;
 use MadeForVinyl\Domain\Basket;
 use MadeForVinyl\Form\Type\UserType;
+use MadeForVinyl\Form\Type\editProfilType;
 
 // Home page
 $app->get('/', function () use ($app) {
@@ -44,9 +45,9 @@ $app->get('/login', function(Request $request) use ($app) {
 $app->match('/inscription', function(Request $request) use ($app) {
     $categories = $app['dao.category']->findAll();
     $user = new User();
-    $userForm = $app['form.factory']->create(new InscriptionType(), $user);
+    $userForm = $app['form.factory']->create(new InscriptionType(), $user, array('app' => $app));
     $userForm->handleRequest($request);
-    if ($userForm->isSubmitted() && $userForm->isValid()) {
+    if ($userForm->isSubmitted() && $userForm->isValid() && $user) {
         // generate a random salt value
         $salt = substr(md5(time()), 0, 23);
         $user->setSalt($salt);
@@ -56,7 +57,7 @@ $app->match('/inscription', function(Request $request) use ($app) {
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password); 
-        $user->setRole('ROLE-USER');   
+        $user->setRole('ROLE_USER');   
             $app['dao.user']->save($user);
             $app->redirect($app['url_generator']->generate('home'));
     
@@ -76,15 +77,12 @@ $app->get('/profil/{id}', function ($id) use ($app) {
 $app->match('/edit_Profil/{id}', function(Request $request, $id) use ($app) {
     $categories = $app['dao.category']->findAll();
     $user = $app['dao.user']->find($id);
-    $profilForm = $app['form.factory']->create(new ProfilType(), $user);
+    $profilForm = $app['form.factory']->create(new ProfilType(), $user,array('app' => $app));
     $profilForm->handleRequest($request);
     if ($profilForm->isSubmitted() && $profilForm->isValid()) {
-        // generate a random salt value
-        $salt = substr(md5(time()), 0, 23);
-        $user->setSalt($salt);
-        $plainPassword = $user->getPassword();
-        // find the default encoder
-        $encoder = $app['security.encoder.digest'];
+       $plainPassword = $user->getPassword();
+        // find the encoder for the user
+        $encoder = $app['security.encoder_factory']->getEncoder($user);
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password);
@@ -207,15 +205,12 @@ $app->get('/admin/category/{id}/delete', function($id, Request $request) use ($a
 $app->match('/admin/user/{id}/edit', function(Request $request, $id) use ($app) {
     $categories = $app['dao.category']->findAll();
     $user = $app['dao.user']->find($id);
-    $userForm = $app['form.factory']->create(new UserType(), $user);
+    $userForm = $app['form.factory']->create(new editProfilType(), $user,array('app' => $app));
     $userForm->handleRequest($request);
     if ($userForm->isSubmitted() && $userForm->isValid()) {
-        // generate a random salt value
-        $salt = substr(md5(time()), 0, 23);
-        $user->setSalt($salt);
         $plainPassword = $user->getPassword();
-        // find the default encoder
-        $encoder = $app['security.encoder.digest'];
+        // find the encoder for the user
+        $encoder = $app['security.encoder_factory']->getEncoder($user);
         // compute the encoded password
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password);
@@ -223,7 +218,7 @@ $app->match('/admin/user/{id}/edit', function(Request $request, $id) use ($app) 
         $app['session']->getFlashBag()->add('success', "L'utilisateur a bien été modifié");
         $app->redirect($app['url_generator']->generate('home'));
     }
-    return $app['twig']->render('user_form.html.twig', array(
+    return $app['twig']->render('editProfil_form.html.twig', array(
         'user' => $user, 
         'categories' => $categories,
         'title' => "Modification Utilisateur",
@@ -258,7 +253,7 @@ $app->match('/admin/category/{id}/edit', function(Request $request, $id) use ($a
     $categoryForm->handleRequest($request);
     if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
         $app['dao.category']->save($category);
-        $app['session']->getFlashBag()->add('success', "La catégory a bien été modifié");
+        $app['session']->getFlashBag()->add('success', "La catégorie a bien été modifiée");
         $app->redirect($app['url_generator']->generate('home'));
     }
     return $app['twig']->render('category_form.html.twig', array(
@@ -284,6 +279,7 @@ $app->get('/ajoutPanier/{id}', function($id) use ($app){
     $basket->setVinyl($vinyl);
     $basket->setOwner($app['user']); //return connected user
     $app['dao.basket']->save($basket); 
-    
-    return $app['twig']->render('index.html.twig', array('categories'=>$categories)); //Renvoyez un message
+    $app['session']->getFlashBag()->add('success', "Le vinyl a bien été enregistré dans votre panier");
+
+    return $app['twig']->render('vinyl.html.twig',array('categories' => $categories, 'vinyl' => $vinyl));
 })->bind('ajoutPanier');

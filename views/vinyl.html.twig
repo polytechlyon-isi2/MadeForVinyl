@@ -7,6 +7,13 @@
 {% endblock %}
 
 {% block content %}
+
+{% for flashMessage in app.session.flashbag.get('success') %}
+<div class="alert alert-success">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+
 <div class="row">
     <div class="col-md-4 col-sm-6 col-xs-12">
         <img src="{{ vinyl.sleeve }}" class="img-thumbnail">
@@ -38,7 +45,9 @@
                   </tr>
                 </tbody>
             </table>
-            <a type="button" class="btn btn-warning" href="{{ path('ajoutPanier', {'id': vinyl.id}) }}"> Ajouter au panier</a>
+            {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a type="submit" class="btn btn-warning" href="{{ path('ajoutPanier', {'id': vinyl.id}) }}"> Ajouter au panier</a>
+            {% endif %}
         </div>
     </div>
 </div>

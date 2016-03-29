@@ -28,6 +28,28 @@ class UserDAO extends DAO implements UserProviderInterface
     }
     
     /**
+    *
+    * Return 1 if the user name exist
+    *
+    * @param $username to verif
+    *
+    *@return 1 if the username exist
+    */
+    public function userNameExisted($username)
+    {
+        $sql = "SELECT * FROM t_user WHERE usr_login=?";
+        $row = $this->getDb()->fetchAssoc($sql, array($username));
+
+        if($row)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    /**
      * Delete a user matching the supplied id.
      *
      * @param integer $id The user id.
