@@ -13,7 +13,7 @@ use MadeForVinyl\Form\Type\editProfilType;
 
 // Home page
 $app->get('/', function () use ($app) {
-    $categories = $app['dao.category']->findAll();
+    $categories = $app['dao.category']->findAll();    
     return $app['twig']->render('index.html.twig',array('categories' => $categories));
 })->bind('home');
 

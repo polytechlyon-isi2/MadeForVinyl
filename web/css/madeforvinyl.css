@@ -140,7 +140,9 @@ h1{
         margin-left: 0%;
     }
 }
+/* END SCALE WITH SCREEN SIZE */
 
+/* CSS BASKET BUTTON */
 .btn-warning{
     color: black;
     transition: all .5s ease;
@@ -151,3 +153,13 @@ h1{
     box-shadow: 0px 0px 20px 0px black;
     color: black;
 }
+/* END CSS BASKET BUTTON */
+
+/* CSS ERROR PANEL */
+#errorPanel{
+    padding-top: 50px;
+}
+#errorPanel h1{
+    color:white;
+}
+/* END CSS ERROR PANEL */
