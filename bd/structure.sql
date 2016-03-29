@@ -40,6 +40,7 @@ create table t_basket (
     basket_id integer not null primary key auto_increment,
     basket_owner integer not null,
     basket_vinyl integer not null,
+    basket_quantity INT NOT NULL,
     foreign key (basket_owner) references t_user(usr_id),
     foreign key (basket_vinyl) references t_vinyl(vinyl_id)
 ) engine=innodb character set utf8 collate utf8_unicode_ci;

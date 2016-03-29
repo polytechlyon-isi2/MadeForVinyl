@@ -60,6 +60,7 @@ class BasketDAO extends DAO
         $basketData = array(
             'basket_owner' => $basket->getOwner()->getId(),
             'basket_vinyl' => $basket->getVinyl()->getId(),
+            'basket_quantity' => $basket->getQuantity(),
             );
             // The basket has never been saved : insert it
             $this->getDb()->insert('t_basket', $basketData);
@@ -95,6 +96,7 @@ class BasketDAO extends DAO
     protected function buildDomainObject($row) {
         $basket = new Basket();
         $basket->setId($row['basket_id']);
+        $quantity->setQuantity($row['basket_quantity']);
         
         if (array_key_exists('basket_owner', $row)) {
             // Find and set the associated user

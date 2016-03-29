@@ -24,6 +24,15 @@ class Basket
      * @var \MadeForVinyl\Domain\Vinyl
      */
     private $vinyl;
+    
+    /**
+     * Quantity
+     *
+     * @var \MadeForVinyl\Domain\Quantity
+     */
+    
+    private $quantity;
+    
 
     public function getId() {
         return $this->id;
@@ -49,4 +58,11 @@ class Basket
         $this->vinyl = $vinyl;
     }
     
+    public function getQuantity() {
+        return $this->quantity;
+    }
+
+    public function setQuantity($quantity) {
+        $this->quantity = $quantity;
+    }
 }

@@ -273,13 +273,20 @@ $app->get('/panier/{id}', function ($id) use ($app){
 
 // Add in a basket
 $app->get('/ajoutPanier/{id}', function($id) use ($app){
-    $basket = new Basket();
+    $baskets = $app['dao.basket']->findAllByIdUser($app['user']->getId());
     $categories = $app['dao.category']->findAll();
     $vinyl = $app['dao.vinyl']->find($id);
-    $basket->setVinyl($vinyl);
-    $basket->setOwner($app['user']); //return connected user
-    $app['dao.basket']->save($basket); 
+    foreach ($baskets as $basket){
+        if ($vinyl->getId() == $basket->getVinyl()->getId()){
+            $basket->setQuantity($basket->getQuantity()+1);
+        }
+    }
+    $newBasket = new Basket();
+    $newBasket->setQuantity(1);
+    $newBasket->setVinyl($vinyl);
+    $newBasket->setOwner($app['user']); //return connected user
+    $app['dao.basket']->save($newBasket); 
     $app['session']->getFlashBag()->add('success', "Le vinyl a bien été enregistré dans votre panier");
 
-    return $app['twig']->render('vinyl.html.twig',array('categories' => $categories, 'vinyl' => $vinyl));
+    return $app['twig']->render('vinyl.html.twig',array('categories' => $categories, 'baskets' => $baskets, 'vinyl' => $vinyl));
 })->bind('ajoutPanier');
