@@ -132,7 +132,7 @@ $app->match('/admin/vinyl/add', function(Request $request) use ($app) {
 $app->match('/admin/user/add', function(Request $request) use ($app){
     $categories = $app['dao.category']->findAll();
     $user = new User();
-    $userForm = $app['form.factory']->create(new UserType(), $user);
+    $userForm = $app['form.factory']->create(new UserType(), $user,array('app' => $app));
     $userForm->handleRequest($request);
     if ($userForm->isSubmitted() && $userForm->isValid()) {
         // generate a random salt value
