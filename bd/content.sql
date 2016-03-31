@@ -9,4 +9,5 @@ INSERT INTO t_vinyl(vinyl_title, vinyl_artist, vinyl_category, vinyl_year, vinyl
 ("Led Zeppelin", "Led Zeppelin", "11", "1969", "http://static.stereogum.com/uploads/2014/10/ledzeppelin1.jpeg",10.00);
 
 /* raw password is '@adm1n' */
-INSERT INTO `madeforvinyl`.`t_user` (`usr_id`, `usr_name`, `usr_surname`, `usr_adress`, `usr_postalCode`, `usr_town`, `usr_login`, `usr_password`, `usr_salt`, `usr_role`) VALUES ('0', 'admin', 'admin', 'admin', '0', 'admin', 'admin', 'zULRDxmsy23NXB5Xn8xmJX4Vfeelj770+Zysx1UEp3HvqhRIeT5OVUASAxVVr6lVq45xt3XbhzZrOckPfSUjUQ==', '6f37030b5941eba2bdd93de', 'ROLE_ADMIN');
+INSERT INTO madeforvinyl.t_user (usr_name , usr_surname, usr_adress, usr_postalCode, usr_town, usr_login, usr_password, usr_salt, usr_role) VALUES 
+('admin', 'admin', 'admin', '0', 'admin', 'admin', 'd3hXldgCJcm/CVuEiNyT7YNyeMK2eFo1UgmBivMeO5MN+ewqXD6NC2MWX4gI//LSt2nJgPvoOO2tH7KnWMDA6Q==', '474a3a8eeeeecc922853f22', 'ROLE_ADMIN');

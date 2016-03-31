@@ -53,32 +53,7 @@ $app->match('/admin/vinyl/{id}/edit', "MadeForVinyl\Controller\AdminController::
 $app->match('/admin/category/{id}/edit', "MadeForVinyl\Controller\AdminController::editCategoryAction")->bind('admin_category_edit');
 
 // Basket page
-$app->get('/panier/{id}', function ($id) use ($app){
-    $categories = $app['dao.category']->findAll();
-    $baskets = $app['dao.basket']->findAllByIdUser($id);
-
-    return $app['twig']->render('basket.html.twig', array('categories'=>$categories, 'baskets' => $baskets));  
-})->bind('basket');
+$app->get('/panier/{id}', "MadeForVinyl\Controller\HomeController::basketAction")->bind('basket');
 
 // Add in a basket
-$app->get('/ajoutPanier/{id}', function($id) use ($app){
-    $baskets = $app['dao.basket']->findAllByIdUser($app['user']->getId());
-    $categories = $app['dao.category']->findAll();
-    $vinyl = $app['dao.vinyl']->find($id);
-    foreach ($baskets as $basket){
-        if ($vinyl->getId() == $basket->getVinyl()->getId()){
-            $basket->setQuantity($basket->getQuantity()+1);
-            $app['dao.basket']->save($basket); 
-        }
-    }
-    if(empty($baskets)){
-        $newBasket = new Basket();
-        $newBasket->setQuantity(1);
-        $newBasket->setVinyl($vinyl);
-        $newBasket->setOwner($app['user']); //return connected user
-        $app['dao.basket']->save($newBasket); 
-    }
-    $app['session']->getFlashBag()->add('success', "Le vinyl a bien été enregistré dans votre panier");
-
-    return $app['twig']->render('vinyl.html.twig',array('categories' => $categories, 'baskets' => $baskets, 'vinyl' => $vinyl));
-})->bind('ajoutPanier');
+$app->get('/ajoutPanier/{id}', "MadeForVinyl\Controller\HomeController::addBasketAction")->bind('ajoutPanier');

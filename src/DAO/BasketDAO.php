@@ -62,7 +62,7 @@ class BasketDAO extends DAO
             'basket_vinyl' => $basket->getVinyl()->getId(),
             'basket_quantity' => $basket->getQuantity(),
             );
-            if ($basket->getId()) {
+        if ($basket->getId()) {
             // The basket has already been saved : update it
             $this->getDb()->update('t_basket', $basketData, array('basket_id' => $basket->getId()));
         } else {

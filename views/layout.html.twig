@@ -42,10 +42,10 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if app.user and is_granted('ROLE_ADMIN') %}
-                        <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ path('admin') }}"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
+                        <li class="{% if adminMenu is defined %}active{% endif %}"><a id=admin href="{{ path('admin') }}"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
                     {% endif %}
                     {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <li><a href="{{ path('basket', { 'id': app.user.id }) }}"><i class="fa fa-shopping-basket"></i> Panier</a></li>
+                        <li><a id=basket href="{{ path('basket', { 'id': app.user.id }) }}"><i class="fa fa-shopping-basket"></i> Panier</a></li>
                     {% endif %}
                     <ul class="nav navbar-nav navbar-right">
                         {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}

@@ -95,6 +95,58 @@ class HomeController {
     }
 
     /**
+     * Basket page controller.
+     *
+     * @param integer $id user id
+     * @param Application $app Silex application
+     */
+    public function basketAction($id, Application $app){ 
+        $baskets = $app['dao.basket']->findAllByIdUser($id);
+        return $app['twig']->render('basket.html.twig', array(
+            'categories'=> HomeController::getCategories($app),
+            'baskets' => $baskets
+            )
+        ); 
+    }
+
+    /**
+     * Add Basket page controller.
+     *
+     * @param integer $id vinyl id
+     * @param Application $app Silex application
+     */
+    public function addBasketAction($id, Application $app){ 
+        $baskets = $app['dao.basket']->findAllByIdUser($app['user']->getId());
+        $categories = $app['dao.category']->findAll();
+        $vinyl = $app['dao.vinyl']->find($id);
+        foreach ($baskets as $basket){
+            if ($vinyl->getId() == $basket->getVinyl()->getId()){
+                $basket->setQuantity($basket->getQuantity()+1);
+                $app['dao.basket']->save($basket);
+                $app['session']->getFlashBag()->add('success', "Le vinyl a bien été enregistré dans votre panier");
+                return $app['twig']->render('vinyl.html.twig',array(
+                    'categories' => HomeController::getCategories($app),
+                    'baskets' => $baskets, 
+                    'vinyl' => $vinyl
+                    )
+                ); 
+            }
+        }
+        $newBasket = new Basket();
+        $newBasket->setQuantity(1);
+        $newBasket->setVinyl($vinyl);
+        $newBasket->setOwner($app['user']); //return connected user
+        $app['dao.basket']->save($newBasket); 
+        $app['session']->getFlashBag()->add('success', "Le vinyl a bien été enregistré dans votre panier");
+        return $app['twig']->render('vinyl.html.twig',array(
+            'categories' => HomeController::getCategories($app),
+            'baskets' => $baskets, 
+            'vinyl' => $vinyl
+            )
+        ); 
+    }
+
+    /**
      * incription user page controller.
      *
      * @param Request $request Incoming request
