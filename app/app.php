@@ -57,7 +57,7 @@ if (isset($app['debug']) && $app['debug']) {
 }
 
 // Register error handler
-/*$app->error(function (\Exception $e, $code) use ($app) {
+$app->error(function (\Exception $e, $code) use ($app) {
     switch ($code) {
         case 403:
             $message = 'Access denied.';
@@ -69,7 +69,7 @@ if (isset($app['debug']) && $app['debug']) {
             $message = "Something went wrong.";
     }
     return $app['twig']->render('error.html.twig', array('message' => $message));
-});*/
+});
 
 
 // Register services
