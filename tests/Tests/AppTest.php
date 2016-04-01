@@ -1,6 +1,6 @@
 <?php
 
-namespace MicroCMS\Tests;
+namespace MadeForVinyl\Tests;
 
 require_once __DIR__.'/../../vendor/autoload.php';
 
@@ -53,21 +53,21 @@ class AppTest extends WebTestCase
     {
         return array(
             array('/'),
-            array('/category/2'),
-            array('/vinyl/2'),
+            array('/category/1'),
+            array('/vinyl/1'),
             array('/login'),
             array('/inscription'),
-            array('/profil/1'),
-            array('/edit_Profil/1'),
+            array('/profil/2'),
+            array('/edit_Profil/2'),
             array('/admin'),
             array('/admin/vinyl/add'),
             array('/admin/user/add'),
             array('/admin/category/add'),
-            array('/admin/vinyl/2/edit'),
-            array('/admin/user/1/edit'),
-            array('/admin/category/2/edit'),
-            array('/panier/1'),
-            array('/ajoutPanier/2'),
+            array('/admin/vinyl/1/edit'),
+            array('/admin/user/2/edit'),
+            array('/admin/category/1/edit'),
+            array('/panier/2'),
+            array('/ajoutPanier/1'),
             ); 
     }
 }
