@@ -2,6 +2,7 @@
 
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
+use MadeForVinyl\Controller\HomeController;
 
 
 // Register global error and exception handlers
@@ -68,7 +69,11 @@ $app->error(function (\Exception $e, $code) use ($app) {
         default:
             $message = "Something went wrong.";
     }
-    return $app['twig']->render('error.html.twig', array('message' => $message));
+    return $app['twig']->render('error.html.twig', array(
+        'message' => $message,
+        'categories' => $app['dao.category']->findAll()
+        )
+    );
 });
 
 
